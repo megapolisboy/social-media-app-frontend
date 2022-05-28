@@ -3,9 +3,9 @@ import Posts from "../components/Posts";
 
 const MainPage = () => {
   return (
-    <div className="flex flex-col items-center mx-36">
-      <div className="w-100 flex-grow">Social Media App</div>
-      <div className="flex w-full flex-row justify-between">
+    <div className="flex flex-col items-center mx-36 my-12">
+      <div className="bg-cyan-500 w-full text-center">Social Media App</div>
+      <div className="flex-1 flex w-full flex-row justify-between">
         <Posts />
         <Form />
       </div>
