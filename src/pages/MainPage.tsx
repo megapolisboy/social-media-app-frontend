@@ -1,12 +1,11 @@
 import Form from "../components/Form";
+import Header from "../components/Header";
 import Posts from "../components/Posts";
 
 const MainPage = () => {
   return (
-    <div className="flex flex-col items-center mx-6 my-12">
-      <div className="bg-cyan-500 w-full text-center py-10 text-3xl">
-        Social Media App
-      </div>
+    <div className="flex flex-col items-center mx-3 my-3">
+      <Header />
       <div className="flex w-full">
         {/* TODO: get posts from REDUX */}
         <Posts
