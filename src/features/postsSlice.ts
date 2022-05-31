@@ -23,6 +23,7 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { addPost, removePostById, fetchPosts } = postsSlice.actions;
+export const { addPost, removePostById, fetchPosts, setPosts } =
+  postsSlice.actions;
 export const selectPosts = (state: RootState) => state.posts.posts;
 export default postsSlice.reducer;
