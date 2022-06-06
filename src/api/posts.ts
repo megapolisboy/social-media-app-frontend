@@ -1,7 +1,10 @@
+import axios from "axios";
 import { PostType } from "../types";
 
 // TODO: substitute this w/ real backend.
 // ! This is just a boilerplate
+const url = "";
+
 const posts = [
   {
     creator: "Oleg",
@@ -34,13 +37,18 @@ const posts = [
 ];
 
 export const fetchPostsApi = async () => {
+  // const posts = await axios.get(url);
   return posts;
 };
 
 export const addPostApi = async (post: PostType) => {
+  // await axios.post(url, post);
+  // const posts = await axios.get(url);
   return [...posts, post];
 };
 
 export const removePostByIdApi = async (post: PostType) => {
+  // await axios.delete(url + "/" + post._id);
+  // const posts = await axios.get(url);
   return posts;
 };
