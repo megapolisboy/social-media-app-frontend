@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .textInput {
+    @apply appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 
+    rounded-sm py-2 px-2 focus:border-gray-700;
+  }
+}

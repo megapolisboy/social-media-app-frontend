@@ -23,35 +23,35 @@ const LoginPage = () => {
         <form className="flex flex-col gap-3">
           <div className="flex flex-col sm:flex-row gap-3">
             <input
-              className="appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 rounded-sm py-2 px-2 focus:outline-none"
-              type="email"
-              placeholder="Email Address"
-              aria-label="Email Address"
+              className="textInput"
+              type="text"
+              placeholder="First Name"
+              aria-label="First Name"
             />
             <input
-              className="appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 rounded-sm py-2 px-2 focus:outline-none"
-              type="email"
-              placeholder="Email Address"
-              aria-label="Email Address"
+              className="textInput"
+              type="text"
+              placeholder="Last Name"
+              aria-label="Last Name"
             />
           </div>
           <input
-            className="appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 rounded-sm py-2 px-2 focus:outline-none"
+            className="textInput"
             type="email"
             placeholder="Email Address"
             aria-label="Email Address"
           />
           <input
-            className="appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 rounded-sm py-2 px-2 focus:outline-none"
-            type="email"
-            placeholder="Email Address"
-            aria-label="Email Address"
+            className="textInput"
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
           />
           <input
-            className="appearance-none bg-transparent border-2 border-gray-300 w-full text-gray-700 rounded-sm py-2 px-2 focus:outline-none"
-            type="email"
-            placeholder="Email Address"
-            aria-label="Email Address"
+            className="textInput"
+            type="password"
+            placeholder="Repeat Password"
+            aria-label="Repeat Password"
           />
           <button className="bg-blue-700 text-white rounded-sm w-full p-1 hover:bg-blue-800">
             SIGN UP
