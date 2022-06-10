@@ -5,3 +5,9 @@ export interface PostType {
   tags: string[];
   image?: File;
 }
+
+export interface UserType {
+  name: string;
+  email: string;
+  password: string;
+}

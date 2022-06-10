@@ -1,3 +1,4 @@
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/Header";
@@ -40,6 +41,13 @@ const LoginPage = () => {
     console.log(data);
   });
 
+  const googleSuccess = (res: CredentialResponse) => {
+    console.log(res);
+  };
+  const googleFailure = () => {
+    console.log("Google sign in was unsuccessful. Try again later");
+  };
+
   return (
     <div className="flex flex-col items-center mx-3 m-3 overflow-hidden">
       <Header />
@@ -53,8 +61,8 @@ const LoginPage = () => {
           stroke-width="2"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
           />
         </svg>
@@ -116,9 +124,9 @@ const LoginPage = () => {
                 >
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
               ) : (
@@ -161,8 +169,11 @@ const LoginPage = () => {
           <input
             type="submit"
             value={isSignup ? "SIGN UP" : "SIGN IN"}
-            className="cursor-pointer bg-blue-700 text-white rounded-sm w-full p-1 hover:bg-blue-800"
+            className="signInButton"
           />
+          {!isSignup && (
+            <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
+          )}
         </form>
         <button
           onClick={() => setIsSignup(!isSignup)}
