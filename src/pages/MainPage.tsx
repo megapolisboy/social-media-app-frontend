@@ -6,44 +6,18 @@ const MainPage = () => {
   return (
     <div className="flex flex-col items-center mx-3 my-3">
       <Header />
-      <div className="flex w-full">
+      <div className="grid grid-cols-main-content w-full">
         {/* TODO: get posts from REDUX */}
         <Posts
           posts={[
             {
-              creator: "Oleg",
-              title: "Life in the small town",
+              creator: "Test User",
+              time : "35",
+              title: "New Year",
               message: "omg",
-              tags: [],
+              tags: ["#happy"],
               image: undefined,
-            },
-            {
-              creator: "Oleg",
-              title: "Life in the small town",
-              message: "omg",
-              tags: [],
-              image: undefined,
-            },
-            {
-              creator: "Oleg",
-              title: "Life in the small town",
-              message: "omg",
-              tags: [],
-              image: undefined,
-            },
-            {
-              creator: "Oleg",
-              title: "Life in the small town",
-              message: "omg",
-              tags: [],
-              image: undefined,
-            },
-            {
-              creator: "Oleg",
-              title: "Life in the small town",
-              message: "omg",
-              tags: [],
-              image: undefined,
+              likes:3,
             },
           ]}
         />
