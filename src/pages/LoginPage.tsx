@@ -1,6 +1,7 @@
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Header from "../components/Header";
 import { signIn, signUp } from "../features/userSlice";
@@ -11,6 +12,7 @@ type Password = "text" | "password";
 const LoginPage = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [passType, setPassType] = useState<Password>("password");
+  const navigate = useNavigate();
 
   const [passwordsEqual, setPasswordsEqual] = useState(true);
   const {
@@ -36,12 +38,20 @@ const LoginPage = () => {
         return;
       }
       setPasswordsEqual(true);
-      dispatch(signUp(data));
+      dispatch(
+        signUp({
+          user: data,
+          navigate,
+        })
+      );
     } else {
       dispatch(
         signIn({
-          email: data.email,
-          password: data.password,
+          user: {
+            email: data.email,
+            password: data.password,
+          },
+          navigate,
         })
       );
     }

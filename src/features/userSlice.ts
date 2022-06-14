@@ -1,10 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NavigateFunction } from "react-router-dom";
 import { RootState } from "../app/store";
 import { UserLongType, UserShortType, UserType } from "../types";
 
 interface UserState {
   currentUser: UserType | undefined;
   token: string | undefined;
+}
+
+export interface SignUpPayload {
+  user: UserLongType;
+  navigate: NavigateFunction;
+}
+
+export interface SignInPayload {
+  user: UserShortType;
+  navigate: NavigateFunction;
 }
 
 const initialState: UserState = {
@@ -16,9 +27,9 @@ export const postsSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signUp: (state, action: PayloadAction<UserLongType>) => {},
+    signUp: (state, action: PayloadAction<SignUpPayload>) => {},
 
-    signIn: (state, action: PayloadAction<UserShortType>) => {},
+    signIn: (state, action: PayloadAction<SignInPayload>) => {},
 
     authGoogle: (state, action: PayloadAction<string>) => {
       // TODO: call sign in with tokenId api
