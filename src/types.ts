@@ -11,3 +11,21 @@ export interface UserType {
   email: string;
   password: string;
 }
+
+export interface UserShortType {
+  email: string;
+  password: string;
+}
+
+export interface UserLongType {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface SignUpResponseType {
+  result: UserType;
+  token: string;
+}

@@ -1,15 +1,10 @@
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Header from "../components/Header";
-
-interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
+import { signIn, signUp } from "../features/userSlice";
+import { UserLongType } from "../types";
 
 type Password = "text" | "password";
 
@@ -22,7 +17,9 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<User>();
+  } = useForm<UserLongType>();
+
+  const dispatch = useAppDispatch();
 
   const changePassType = () => {
     if (passType === "password") {
@@ -32,13 +29,22 @@ const LoginPage = () => {
     }
   };
 
-  const onSubmit = handleSubmit((data) => {
-    if (data.password !== data.repeatPassword) {
-      setPasswordsEqual(false);
-      return;
+  const onSubmit = handleSubmit(async (data) => {
+    if (isSignup) {
+      if (data.password !== data.confirmPassword) {
+        setPasswordsEqual(false);
+        return;
+      }
+      setPasswordsEqual(true);
+      dispatch(signUp(data));
+    } else {
+      dispatch(
+        signIn({
+          email: data.email,
+          password: data.password,
+        })
+      );
     }
-    setPasswordsEqual(true);
-    console.log(data);
   });
 
   const googleSuccess = (res: CredentialResponse) => {
@@ -154,12 +160,12 @@ const LoginPage = () => {
               <input
                 className="textInput"
                 type={passType}
-                placeholder="Repeat Password"
-                aria-label="Repeat Password"
-                {...register("repeatPassword", { required: true })}
+                placeholder="Confirm Password"
+                aria-label="Confirm Password"
+                {...register("confirmPassword", { required: true })}
               />
               <p className="text-red-500">
-                {errors.repeatPassword && "Repeat password is required"}
+                {errors.confirmPassword && "Repeat password is required"}
               </p>
               <p className="text-red-500">
                 {!passwordsEqual && "Password is not confirmed"}
