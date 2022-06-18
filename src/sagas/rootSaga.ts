@@ -9,7 +9,6 @@ import {
 import { handleAuthGoogle, handleSignIn, handleSignUp } from "./userWorker";
 
 export function* watcherSaga() {
-
   yield takeEvery(addPost.type, handleAddPost);
   yield takeEvery(removePostById.type, handleRemovePostById);
   yield takeEvery(fetchPosts.type, handleFetchPosts);
