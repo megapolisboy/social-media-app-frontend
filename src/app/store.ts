@@ -1,17 +1,38 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-// ...
-
 import postsReducer from "../features/postsSlice";
+import userReducer from "../features/userSlice";
+import errorReducer from "../features/errorSlice";
+import { watcherSaga } from "../sagas/rootSaga";
+import storage from "redux-persist/lib/storage";
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
+
 const sagaMiddleware = createSagaMiddleware();
 
-export const store = configureStore({
-  reducer: {
-    posts: postsReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+const reducers = combineReducers({
+  posts: postsReducer,
+  user: userReducer,
+  error: errorReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+  blacklist: ["error"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware).concat(thunk),
+});
+
+sagaMiddleware.run(watcherSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
