@@ -1,5 +1,7 @@
 import MainPage from "./pages/MainPage";
 import "./App.css";
+import { Provider } from "react-redux";
+import {store} from "./app/store"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
@@ -17,7 +19,8 @@ function App() {
     }
   });
   return (
-    <div className="max-w-[2024px] mx-auto">
+    <Provider store={store} >
+       <div className="max-w-[2024px] mx-auto">
       <BrowserRouter>
         <Routes>
           {/* {!token && (
@@ -34,6 +37,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </Provider>
   );
 }
 
