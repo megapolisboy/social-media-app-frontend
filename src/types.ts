@@ -9,7 +9,8 @@ export interface PostType {
 export interface UserType {
   name: string;
   email: string;
-  password: string;
+  password?: string;
+  picture?: string;
 }
 
 export interface UserShortType {
@@ -27,5 +28,16 @@ export interface UserLongType {
 
 export interface SignUpResponseType {
   result: UserType;
+  token: string;
+}
+
+export interface GoogleUser {
+  email: string;
+  name: string;
+  image: string;
+}
+
+export interface GoogleResponseType {
+  result: GoogleUser;
   token: string;
 }

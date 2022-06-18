@@ -1,5 +1,7 @@
 import axios from "axios";
 import {
+  GoogleResponseType,
+  GoogleUser,
   PostType,
   SignUpResponseType,
   UserLongType,
@@ -11,9 +13,14 @@ import {
 // ! This is just a boilerplate
 const api = axios.create({ baseURL: "http://localhost:5000" });
 
-export const authGoogleApi = async (a: string) => {
-  // const posts = await axios.get(url);
-  return {};
+export const authGoogleApi = async (
+  token: string
+): Promise<GoogleResponseType> => {
+  const data = (await api.post("/user/signin/google", { token })).data;
+  const result: GoogleUser = data.result;
+  const jwtToken: string = data.token;
+  console.log({ result, jwtToken });
+  return { result, token: jwtToken };
 };
 
 export const signUpApi = async (user: UserLongType) => {

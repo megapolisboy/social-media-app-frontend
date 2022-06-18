@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Header from "../components/Header";
-import { signIn, signUp } from "../features/userSlice";
+import { removeUserErrorMessage } from "../features/errorSlice";
+import { authGoogle, signIn, signUp } from "../features/userSlice";
 import { UserLongType } from "../types";
 
 type Password = "text" | "password";
@@ -22,6 +23,7 @@ const LoginPage = () => {
   } = useForm<UserLongType>();
 
   const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.error.userErrorMessage);
 
   const changePassType = () => {
     if (passType === "password") {
@@ -58,10 +60,15 @@ const LoginPage = () => {
   });
 
   const googleSuccess = (res: CredentialResponse) => {
-    console.log(res);
+    dispatch(authGoogle(res.credential ?? ""));
   };
   const googleFailure = () => {
     console.log("Google sign in was unsuccessful. Try again later");
+  };
+
+  const changeSignType = () => {
+    setIsSignup(!isSignup);
+    dispatch(removeUserErrorMessage());
   };
 
   return (
@@ -182,6 +189,7 @@ const LoginPage = () => {
               </p>
             </div>
           )}
+          {error && <p className="text-red-500">{error}</p>}
           <input
             type="submit"
             value={isSignup ? "SIGN UP" : "SIGN IN"}
@@ -192,7 +200,7 @@ const LoginPage = () => {
           )}
         </form>
         <button
-          onClick={() => setIsSignup(!isSignup)}
+          onClick={changeSignType}
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 self-end"
         >
           {isSignup
