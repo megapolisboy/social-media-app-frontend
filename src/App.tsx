@@ -20,7 +20,7 @@ function App() {
     <div className="max-w-[2024px] mx-auto">
       <BrowserRouter>
         <Routes>
-          {!token && (
+          {/* {!token && (
             <Route path="*" element={<Navigate replace to="/auth" />} />
           )}
           {!token && (
@@ -28,7 +28,7 @@ function App() {
           )}
           {token && (
             <Route path="/auth" element={<Navigate replace to="/" />} />
-          )}
+          )} */}
           <Route path="/" element={<MainPage />} />
           <Route path="/auth" element={<LoginPage />} />
         </Routes>
