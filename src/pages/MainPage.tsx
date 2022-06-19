@@ -1,11 +1,12 @@
 import Form from "../components/Form";
 import Header from "../components/Header";
-import Posts from "../components/Posts";
+
 import { useAppSelector } from "../app/hooks";
 
 import { PostType } from "../types";
 import { RootState } from "../app/store";
 import { useState } from "react";
+import Posts from "../components/PostStuff/Posts";
 
 interface Props {
   posts: PostType[];
@@ -28,12 +29,11 @@ const MainPage = () => {
       <Header />
       <div className="flex flex-col space-between w-full mt-6 md:gap-5">
         {!isFormShown && (
-          <button
-            onClick={makeFormVisible}
-            className="fixed bottom-5 right-5 bg-white border-4 border-black text-black z-20 rounded-full text-5xl w-16 h-16 pb-8 hover:bg-black hover:text-white hover:scale-110 "
-          >
-            +
-          </button>
+          <div onClick={makeFormVisible} className="fixed bottom-5 right-5 bg-white border-4 border-black text-black z-20 rounded-full text-4xl w-[50px] h-[50px]  hover:bg-black hover:text-white hover:scale-110 flex justify-center items-center">
+            <div className="items-center ">
+              +
+            </div>
+          </div>
         )}
         {isFormShown && (
           <div

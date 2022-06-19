@@ -10,9 +10,8 @@ const posts = [
     id: 0,
     creator: "Oleg",
     title: "Life in the small town",
-    message:
-      "goodfdsgsdfgdfgdfgfdgdfgdfgkshfuishguihsfihguihgiuhfdusghidufhgidsugh",
-    tags: [],
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse laoreet, sapien non pharetra imperdiet, ipsum lectus eleifend diam, sed interdum arcu ante eu diam. Aliquam erat volutpat. Phasellus gravida mauris sed erat euismod suscipit orci aliquam.",
+    tags: ["#happy","#cool"],
     likes: 0,
     image: undefined,
   },

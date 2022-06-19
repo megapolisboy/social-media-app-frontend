@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { logout } from "../features/userSlice";
-import AvatarImage from "./AvatarImage";
+import AvatarImage from "./UI/AvatarImage";
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);

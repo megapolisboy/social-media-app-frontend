@@ -1,4 +1,4 @@
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../../app/hooks";
 
 const AvatarImage = () => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
