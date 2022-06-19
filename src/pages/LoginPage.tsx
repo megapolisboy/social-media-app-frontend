@@ -137,6 +137,7 @@ const LoginPage = () => {
               aria-label="Password"
               {...register("password", { required: true })}
             />
+            {/* TODO: fix eye problem */}
             <button onClick={() => changePassType()}>
               {passType === "password" ? (
                 <svg

@@ -8,18 +8,7 @@ interface PostsState {
 }
 
 const initialState: PostsState = {
-  posts: [
-    {
-      id:0,
-      creator: "Test User",
-      time : "35",
-      title: "New Year",
-      message: "omg",
-      tags: ["#happy"],
-      image: undefined,
-      likes:3,
-    },
-  ],
+  posts: [],
 };
 
 export const postsSlice = createSlice({
@@ -27,16 +16,8 @@ export const postsSlice = createSlice({
   initialState,
   reducers: {
     addPost: (state, action: PayloadAction<PostType>) => {},
-    addLike :  (state, action: PayloadAction<PostType>) => {
-      for (let i = 0; i < state.posts.length; i++) {
-        if(state.posts[i].id === action.payload.id){
-          state.posts[i] = {...action.payload, likes:action.payload.likes+1}
-        }
-      }
-    },
-    removePostById: (state, action: PayloadAction<number>) => {
-      state.posts = state.posts.filter(s => s.id !== action.payload);
-    },
+    addLike: (state, action: PayloadAction<number>) => {},
+    removePostById: (state, action: PayloadAction<number>) => {},
     fetchPosts: (state) => {},
     setPosts: (state, action: PayloadAction<PostType[]>) => {
       state.posts = action.payload;
@@ -44,6 +25,7 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { addPost, removePostById, fetchPosts, setPosts, addLike} = postsSlice.actions;
+export const { addPost, removePostById, fetchPosts, setPosts, addLike } =
+  postsSlice.actions;
 export const selectPosts = (state: RootState) => state.posts.posts;
 export default postsSlice.reducer;

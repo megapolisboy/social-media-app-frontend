@@ -1,5 +1,11 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
-import { addPostApi, fetchPostsApi, removePostByIdApi } from "../api/posts";
+import {
+  addLikeApi,
+  addPostApi,
+  fetchPostsApi,
+  removePostByIdApi,
+} from "../api/posts";
 import { setPosts } from "../features/postsSlice";
 import { PostType } from "../types";
 
@@ -20,7 +26,15 @@ export function* handleRemovePostById(action: any): Generator {
   yield put(setPosts(posts));
 }
 
-export function* handleFetchPosts(action: any): Generator {
+export function* handleFetchPosts(): Generator {
   const posts = (yield call(fetchPostsApi)) as unknown as PostType[];
+  yield put(setPosts(posts));
+}
+
+export function* handleAddLike(action: PayloadAction<number>): Generator {
+  const posts = (yield call(
+    addLikeApi,
+    action.payload
+  )) as unknown as PostType[];
   yield put(setPosts(posts));
 }

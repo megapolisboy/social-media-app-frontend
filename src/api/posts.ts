@@ -7,31 +7,40 @@ const url = "";
 
 const posts = [
   {
+    id: 0,
     creator: "Oleg",
     title: "Life in the small town",
-    message: "good",
+    message:
+      "goodfdsgsdfgdfgdfgfdgdfgdfgkshfuishguihsfihguihgiuhfdusghidufhgidsugh",
     tags: [],
+    likes: 0,
     image: undefined,
   },
   {
+    id: 1,
     creator: "Boris",
     title: "Life in the village",
     message: "pretty refreshing",
     tags: [],
+    likes: 0,
     image: undefined,
   },
   {
+    id: 2,
     creator: "Vova",
     title: "Life in the capital",
     message: "luxurious",
     tags: [],
+    likes: 0,
     image: undefined,
   },
   {
+    id: 3,
     creator: "John",
     title: "Life as a coder",
     message: "makes me feel powerful",
     tags: [],
+    likes: 0,
     image: undefined,
   },
 ];
@@ -50,5 +59,9 @@ export const addPostApi = async (post: PostType) => {
 export const removePostByIdApi = async (post: PostType) => {
   // await axios.delete(url + "/" + post._id);
   // const posts = await axios.get(url);
+  return posts;
+};
+
+export const addLikeApi = async (id: number) => {
   return posts;
 };

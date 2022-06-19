@@ -1,7 +1,13 @@
 import { takeEvery } from "redux-saga/effects";
-import { addPost, fetchPosts, removePostById } from "../features/postsSlice";
+import {
+  addLike,
+  addPost,
+  fetchPosts,
+  removePostById,
+} from "../features/postsSlice";
 import { authGoogle, signIn, signUp } from "../features/userSlice";
 import {
+  handleAddLike,
   handleAddPost,
   handleFetchPosts,
   handleRemovePostById,
@@ -12,6 +18,7 @@ export function* watcherSaga() {
   yield takeEvery(addPost.type, handleAddPost);
   yield takeEvery(removePostById.type, handleRemovePostById);
   yield takeEvery(fetchPosts.type, handleFetchPosts);
+  yield takeEvery(addLike.type, handleAddLike);
 
   yield takeEvery(authGoogle.type, handleAuthGoogle);
   yield takeEvery(signUp.type, handleSignUp);
