@@ -11,7 +11,9 @@ import {
 
 // TODO: substitute this w/ real backend.
 // ! This is just a boilerplate
-const api = axios.create({ baseURL: "http://localhost:5000" });
+const api = axios.create({
+  baseURL: "https://social-media-app-introvert.herokuapp.com",
+});
 
 export const authGoogleApi = async (
   token: string
@@ -19,7 +21,6 @@ export const authGoogleApi = async (
   const data = (await api.post("/user/signin/google", { token })).data;
   const result: GoogleUser = data.result;
   const jwtToken: string = data.token;
-  console.log({ result, jwtToken });
   return { result, token: jwtToken };
 };
 

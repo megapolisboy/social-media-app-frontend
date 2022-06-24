@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { act } from "react-dom/test-utils";
 import { RootState } from "../app/store";
-import { PostType } from "../types";
+import { PostType, ShortPostType } from "../types";
 
 interface PostsState {
   posts: PostType[];
@@ -15,9 +15,9 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<PostType>) => {},
-    addLike: (state, action: PayloadAction<number>) => {},
-    removePostById: (state, action: PayloadAction<number>) => {},
+    addPost: (state, action: PayloadAction<ShortPostType>) => {},
+    addLike: (state, action: PayloadAction<string>) => {},
+    removePostById: (state, action: PayloadAction<string>) => {},
     fetchPosts: (state) => {},
     setPosts: (state, action: PayloadAction<PostType[]>) => {
       state.posts = action.payload;

@@ -1,67 +1,41 @@
 import axios from "axios";
-import { PostType } from "../types";
+import { PostType, ShortPostType } from "../types";
 
 // TODO: substitute this w/ real backend.
 // ! This is just a boilerplate
-const url = "";
+const api = axios.create({
+  baseURL: "https://social-media-app-introvert.herokuapp.com",
+});
 
-const posts = [
-  {
-    id: 0,
-    creator: "Oleg",
-    title: "Life in the small town",
-    message:
-      "goodfdsgsdfgdfgdfgfdgdfgdfgkshfuishguihsfihguihgiuhfdusghidufhgidsugh",
-    tags: [],
-    likes: 0,
-    image: undefined,
-  },
-  {
-    id: 1,
-    creator: "Boris",
-    title: "Life in the village",
-    message: "pretty refreshing",
-    tags: [],
-    likes: 0,
-    image: undefined,
-  },
-  {
-    id: 2,
-    creator: "Vova",
-    title: "Life in the capital",
-    message: "luxurious",
-    tags: [],
-    likes: 0,
-    image: undefined,
-  },
-  {
-    id: 3,
-    creator: "John",
-    title: "Life as a coder",
-    message: "makes me feel powerful",
-    tags: [],
-    likes: 0,
-    image: undefined,
-  },
-];
+api.interceptors.request.use((req) => {
+  const localStorageData = localStorage.getItem("persist:root");
+  const user = JSON.parse(localStorageData || "").user;
+  const token = JSON.parse(user).token;
+  if (token) {
+    req.headers!.Authorization = "Bearer " + token;
+  }
+  return req;
+});
 
 export const fetchPostsApi = async () => {
-  // const posts = await axios.get(url);
-  return posts;
+  const result = await api.get("/posts");
+  return result.data;
 };
 
-export const addPostApi = async (post: PostType) => {
-  // await axios.post(url, post);
-  // const posts = await axios.get(url);
-  return [...posts, post];
+export const addPostApi = async (post: ShortPostType) => {
+  await api.post("/posts", post);
+  const result = await fetchPostsApi();
+  return result;
 };
 
-export const removePostByIdApi = async (post: PostType) => {
-  // await axios.delete(url + "/" + post._id);
-  // const posts = await axios.get(url);
-  return posts;
+export const removePostByIdApi = async (id: string) => {
+  await api.delete("/posts/" + id);
+  const result = await fetchPostsApi();
+  return result;
 };
 
 export const addLikeApi = async (id: number) => {
-  return posts;
+  await api.patch(`/posts/${id}/likePost`);
+  const result = await fetchPostsApi();
+  return result;
 };

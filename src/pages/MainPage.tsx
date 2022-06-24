@@ -12,7 +12,6 @@ interface Props {
 }
 
 const MainPage = () => {
-  let posts = useAppSelector((state: RootState) => state.posts.posts);
   const [isFormShown, setIsFormShown] = useState(false);
 
   const makeFormVisible = () => {
@@ -43,7 +42,7 @@ const MainPage = () => {
             <Form />
           </div>
         )}
-        <Posts posts={posts} />
+        <Posts />
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 import { useAppDispatch } from "../app/hooks";
 import { removePostById } from "../features/postsSlice";
-import { PostType } from "../types";
+import { PostType, UserType } from "../types";
 import { addLike } from "../features/postsSlice";
 import { useNavigate } from "react-router-dom";
+//@ts-ignore
+import { DateTime } from "luxon";
 
 interface Props {
   post: PostType;
@@ -13,24 +15,42 @@ const Post: React.FC<Props> = ({ post }) => {
   const dispatch = useAppDispatch();
 
   function removePost() {
-    dispatch(removePostById(post.id));
+    dispatch(removePostById(post._id));
   }
 
   function addLikes() {
-    dispatch(addLike(post.id));
+    dispatch(addLike(post._id));
   }
 
   const moveToPostPage = () => {
-    navigate(`/${post.id}`);
+    navigate(`/${post._id}`);
+  };
+
+  const countTime = (isoString: string) => {
+    const date1 = DateTime.now();
+    const date2 = DateTime.fromISO(post.createdAt);
+    const diff = date1.diff(date2, [
+      "years",
+      "months",
+      "days",
+      "hours",
+      "minutes",
+    ]);
+    const time = diff.toObject();
+    if (time.years && time.years > 0) return `${time.years} years ago`;
+    if (time.months && time.months > 0) return `${time.months} months ago`;
+    if (time.days && time.days > 0) return `${time.days} days ago`;
+    if (time.hours && time.hours > 0) return `${time.hours} hours ago`;
+    if (time.minutes) return `${Math.round(time.minutes)} minutes ago`;
   };
 
   return (
-    <div className="shadow-2xl rounded-lg w-[300px] h-[350px] justify-self-center ">
+    <div className="shadow-2xl rounded-lg w-[300px] h-[370px] justify-self-center ">
       <div className="relative">
         <div className="z-[1] flex absolute  w-full text-white justify-between px-2.5">
           <div className="">
-            <div className="">{post.creator}</div>
-            <div>{post.time + " min ago"}</div>
+            <div className="">{(post.creator as UserType).name}</div>
+            <div>{countTime(post.createdAt)}</div>
           </div>
           <h1
             onClick={moveToPostPage}
@@ -76,7 +96,7 @@ const Post: React.FC<Props> = ({ post }) => {
                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
               />
             </svg>
-            <div>{post.likes + " LIKES"}</div>
+            <div>{post.likes.length + " LIKES"}</div>
           </div>
           <div
             className="flex cursor-pointer hover:bg-slate-100 rounded-sm p-2"

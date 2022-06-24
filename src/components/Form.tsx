@@ -18,7 +18,15 @@ const Form = () => {
   } = useForm<FormData>();
 
   const dispatch = useAppDispatch();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    const post = {
+      title: data.title,
+      message: data.message,
+      tags: data.tags.length > 0 ? data.tags.split(" ") : ["#introvert"],
+      createdAt: new Date(),
+    };
+    dispatch(addPost(post));
+  });
 
   return (
     <form
