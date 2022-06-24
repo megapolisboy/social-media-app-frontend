@@ -39,7 +39,7 @@ const MainPage = () => {
             className="fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center z-10 bg-black/60"
             onClick={makeFormInvisible}
           >
-            <Form />
+            <Form makeFormInvisible={makeFormInvisible} />
           </div>
         )}
         <Posts />

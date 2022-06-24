@@ -9,7 +9,11 @@ type FormData = {
   tags: string;
 };
 
-const Form = () => {
+interface Props {
+  makeFormInvisible: () => void;
+}
+
+const Form: React.FC<Props> = ({ makeFormInvisible }) => {
   const {
     register,
     setValue,
@@ -26,6 +30,7 @@ const Form = () => {
       createdAt: new Date(),
     };
     dispatch(addPost(post));
+    makeFormInvisible();
   });
 
   return (
