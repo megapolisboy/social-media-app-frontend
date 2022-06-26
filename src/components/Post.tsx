@@ -60,8 +60,11 @@ const Post: React.FC<Props> = ({ post }) => {
           </h1>
         </div>
         <img
-          className="blur-[1px] rounded-t-lg"
-          src="http://northeastchamber.org/wp-content/uploads/2021/06/fireworks.jpeg"
+          className="rounded-t-lg h-40 w-full object-cover"
+          src={
+            post.selectedFile ||
+            "http://northeastchamber.org/wp-content/uploads/2021/06/fireworks.jpeg"
+          }
           alt=""
         />
       </div>

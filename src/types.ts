@@ -6,7 +6,7 @@ export interface PostType {
   title: string;
   message: string;
   tags: string[];
-  image?: File;
+  selectedFile?: string;
   likes: UserType[] | string[];
 }
 
@@ -14,6 +14,7 @@ export interface ShortPostType {
   title: string;
   message: string;
   tags: string[];
+  selectedFile?: string;
 }
 
 export interface UserType {

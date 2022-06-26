@@ -4,7 +4,7 @@ import { PostType, ShortPostType } from "../types";
 // TODO: substitute this w/ real backend.
 // ! This is just a boilerplate
 const api = axios.create({
-  baseURL: "https://social-media-app-introvert.herokuapp.com",
+  baseURL: "http://localhost:5000",
 });
 
 api.interceptors.request.use((req) => {
