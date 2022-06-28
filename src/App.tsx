@@ -27,17 +27,20 @@ function App() {
         <BrowserRouter>
           <Routes>
             {!token && (
-              <Route path="*" element={<Navigate replace to="/auth" />} />
-            )}
-            {!token && (
-              <Route path="/" element={<Navigate replace to="/auth" />} />
+              <>
+                <Route path="/auth" element={<LoginPage />} />
+                <Route path="*" element={<Navigate replace to="/auth" />} />
+              </>
             )}
             {token && (
-              <Route path="/auth" element={<Navigate replace to="/" />} />
+              <>
+                <Route path="/" element={<MainPage mode="Feed" />} />
+                <Route path="/page" element={<MainPage mode="Page" />} />
+
+                <Route path="/:id" element={<PostDetailsPage />} />
+                <Route path="/auth" element={<Navigate replace to="/" />} />
+              </>
             )}
-            <Route path="/" element={<MainPage />} />
-            <Route path="/auth" element={<LoginPage />} />
-            <Route path="/:id" element={<PostDetailsPage />} />
           </Routes>
         </BrowserRouter>
       </div>

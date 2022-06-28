@@ -4,7 +4,7 @@ import { PostType, ShortPostType } from "../types";
 // TODO: substitute this w/ real backend.
 // ! This is just a boilerplate
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://social-media-app-introvert.herokuapp.com",
 });
 
 api.interceptors.request.use((req) => {
@@ -22,6 +22,11 @@ export const fetchPostsApi = async () => {
   return result.data;
 };
 
+export const fetchCurrentUserPostsApi = async () => {
+  const result = await api.get("/posts/currentUserPosts");
+  return result.data;
+};
+
 export const addPostApi = async (post: ShortPostType) => {
   await api.post("/posts", post);
   const result = await fetchPostsApi();
@@ -34,7 +39,7 @@ export const removePostByIdApi = async (id: string) => {
   return result;
 };
 
-export const addLikeApi = async (id: number) => {
+export const addLikeApi = async (id: string) => {
   await api.patch(`/posts/${id}/likePost`);
   const result = await fetchPostsApi();
   return result;

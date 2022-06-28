@@ -5,10 +5,12 @@ import { PostType, ShortPostType } from "../types";
 
 interface PostsState {
   posts: PostType[];
+  currentUserPosts: PostType[];
 }
 
 const initialState: PostsState = {
   posts: [],
+  currentUserPosts: [],
 };
 
 export const postsSlice = createSlice({
@@ -22,10 +24,21 @@ export const postsSlice = createSlice({
     setPosts: (state, action: PayloadAction<PostType[]>) => {
       state.posts = action.payload;
     },
+    fetchCurrentUserPosts: (state) => {},
+    setCurrentUserPosts: (state, action: PayloadAction<PostType[]>) => {
+      state.currentUserPosts = action.payload;
+    },
   },
 });
 
-export const { addPost, removePostById, fetchPosts, setPosts, addLike } =
-  postsSlice.actions;
+export const {
+  addPost,
+  removePostById,
+  fetchPosts,
+  setPosts,
+  addLike,
+  fetchCurrentUserPosts,
+  setCurrentUserPosts,
+} = postsSlice.actions;
 export const selectPosts = (state: RootState) => state.posts.posts;
 export default postsSlice.reducer;

@@ -15,6 +15,7 @@ export interface ShortPostType {
   message: string;
   tags: string[];
   selectedFile?: string;
+  createdAt: Date;
 }
 
 export interface UserType {

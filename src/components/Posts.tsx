@@ -1,16 +1,31 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchPosts } from "../features/postsSlice";
+import { fetchCurrentUserPosts, fetchPosts } from "../features/postsSlice";
 import { PostType } from "../types";
 import Post from "./Post";
 import Spinner from "./Spinner";
 
-const Posts: React.FC = () => {
-  const posts = useAppSelector((state) => state.posts.posts);
+interface Props {
+  mode: "Feed" | "Page";
+}
+
+const Posts: React.FC<Props> = ({ mode }) => {
+  const allPosts = useAppSelector((state) => state.posts.posts);
+  const currentUserPosts = useAppSelector(
+    (state) => state.posts.currentUserPosts
+  );
+  const posts = mode === "Feed" ? allPosts : currentUserPosts;
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
+    if (mode === "Feed") {
+      // TODO: add limitatiton
+      dispatch(fetchPosts());
+    } else {
+      // dispatch(fetchCurrentUserPosts)
+      dispatch(fetchCurrentUserPosts());
+    }
+    console.log(currentUserPosts);
+  }, [mode]);
   return (
     <div className="grow">
       {!posts.length ? (
@@ -18,9 +33,9 @@ const Posts: React.FC = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 pb-5">
           {posts.map((post) => (
-            <Post post={post} key={post._id} />
+            <Post post={post} key={post._id} mode={mode} />
           ))}
         </div>
       )}

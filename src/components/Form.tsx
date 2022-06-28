@@ -33,6 +33,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       message: data.message,
       tags: data.tags.length > 0 ? data.tags.split(" ") : ["#introvert"],
       selectedFile: data.image,
+      createdAt: new Date(),
     };
     dispatch(addPost(post));
     makeFormInvisible();
@@ -47,13 +48,32 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
     <form
       onSubmit={onSubmit}
       onClick={(e) => e.stopPropagation()}
-      className="bg-white w-[400px] h-[580px] shadow-2xl rounded-lg flex flex-col gap-4 p-3"
+      className="w-full relative bg-white max-w-[400px] shadow-2xl rounded-lg flex flex-col gap-4 p-3"
     >
       <div className="text-[36px] text-center ">Create a Post</div>
+      <button
+        className="absolute right-3 top-3 rounded-full hover:bg-gray-200 p-1"
+        onClick={makeFormInvisible}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
       <div className="flex flex-col gap-2">
         <input
           {...register("title", { required: true })}
-          className="pl-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
+          className="p-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
           placeholder="Title"
           type="text"
         />
@@ -64,7 +84,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       <div className="flex flex-col gap-2">
         <textarea
           {...register("message", { required: true })}
-          className="pl-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)] resize-none"
+          className="px-2 h-48 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)] resize-none"
           placeholder="Message"
         />
         {errors.title && (
@@ -73,7 +93,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       </div>
       <input
         {...register("tags")}
-        className="pl-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
+        className="p-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
         placeholder="Tags"
         type="text"
       />
@@ -90,12 +110,12 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
         <img src={src} className=" w-24" alt="" />
       </div>
       <input
-        className="cursor-pointer rounded-[5px] bg-green-400"
+        className="cursor-pointer py-2 rounded-md bg-green-400"
         type="submit"
         value="SUBMIT"
       />
       <button
-        className="rounded-[5px] bg-red-600"
+        className="cursor-pointer py-1 rounded-md bg-red-600"
         onClick={(e) => clearForm(e)}
       >
         CLEAR

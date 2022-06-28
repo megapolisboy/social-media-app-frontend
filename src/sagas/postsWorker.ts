@@ -3,11 +3,17 @@ import { call, put } from "redux-saga/effects";
 import {
   addLikeApi,
   addPostApi,
+  fetchCurrentUserPostsApi,
   fetchPostsApi,
   removePostByIdApi,
 } from "../api/posts";
-import { setPosts } from "../features/postsSlice";
+import { setCurrentUserPosts, setPosts } from "../features/postsSlice";
 import { PostType } from "../types";
+
+export function* handleFetchCurrentUserPosts(): Generator {
+  const posts = (yield call(fetchCurrentUserPostsApi)) as unknown as PostType[];
+  yield put(setCurrentUserPosts(posts));
+}
 
 export function* handleAddPost(action: any): Generator {
   const posts = (yield call(
@@ -15,6 +21,7 @@ export function* handleAddPost(action: any): Generator {
     action.payload
   )) as unknown as PostType[];
   yield put(setPosts(posts));
+  yield handleFetchCurrentUserPosts();
 }
 
 export function* handleRemovePostById(action: any): Generator {
@@ -24,6 +31,7 @@ export function* handleRemovePostById(action: any): Generator {
     action.payload
   )) as unknown as PostType[];
   yield put(setPosts(posts));
+  yield handleFetchCurrentUserPosts();
 }
 
 export function* handleFetchPosts(): Generator {
@@ -31,10 +39,11 @@ export function* handleFetchPosts(): Generator {
   yield put(setPosts(posts));
 }
 
-export function* handleAddLike(action: PayloadAction<number>): Generator {
+export function* handleAddLike(action: PayloadAction<string>): Generator {
   const posts = (yield call(
     addLikeApi,
     action.payload
   )) as unknown as PostType[];
   yield put(setPosts(posts));
+  yield handleFetchCurrentUserPosts();
 }
