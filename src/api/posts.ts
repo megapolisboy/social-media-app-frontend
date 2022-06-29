@@ -3,6 +3,7 @@ import { PostType, ShortPostType } from "../types";
 
 const api = axios.create({
   baseURL: "https://social-media-app-introvert.herokuapp.com",
+  // baseURL: "http://localhost:5000",
 });
 
 api.interceptors.request.use((req) => {
@@ -26,19 +27,16 @@ export const fetchCurrentUserPostsApi = async () => {
 };
 
 export const addPostApi = async (post: ShortPostType) => {
-  await api.post("/posts", post);
-  const result = await fetchPostsApi();
-  return result;
+  const newPost = await api.post("/posts", post);
+  return newPost.data;
 };
 
 export const removePostByIdApi = async (id: string) => {
   await api.delete("/posts/" + id);
-  const result = await fetchPostsApi();
-  return result;
 };
 
 export const addLikeApi = async (id: string) => {
-  await api.patch(`/posts/${id}/likePost`);
-  const result = await fetchPostsApi();
-  return result;
+  const post = await api.patch(`/posts/${id}/likePost`);
+  console.log(post.data);
+  return post.data;
 };

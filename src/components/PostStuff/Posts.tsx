@@ -11,8 +11,7 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ mode }) => {
   const allPosts = useAppSelector((state) => state.posts.posts);
-  // const loading = useAppSelector((state) => state.posts.loading);
-  const loading = false;
+  const loading = useAppSelector((state) => state.posts.loading);
   const currentUserPosts = useAppSelector(
     (state) => state.posts.currentUserPosts
   );
