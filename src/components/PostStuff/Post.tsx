@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { removePostById } from "../features/postsSlice";
-import { PostType, UserType } from "../types";
-import { addLike } from "../features/postsSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { removePostById, setCurrent } from "../../features/postsSlice";
+import { PostType, UserType } from "../../types";
+import { addLike } from "../../features/postsSlice";
 import { useNavigate } from "react-router-dom";
 //@ts-ignore
 import { DateTime } from "luxon";
@@ -16,6 +16,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
+
   const [isBeingLiked, setIsBeignLiked] = useState(false);
 
   const addBeingLikeEffect = () => {
@@ -33,6 +34,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
   }
 
   const moveToPostPage = () => {
+    dispatch(setCurrent(post));
     navigate(`/${post._id}`);
   };
 

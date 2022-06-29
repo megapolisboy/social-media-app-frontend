@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchCurrentUserPosts, fetchPosts } from "../features/postsSlice";
-import { PostType } from "../types";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { fetchCurrentUserPosts, fetchPosts } from "../../features/postsSlice";
+import { PostType } from "../../types";
 import Post from "./Post";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 interface Props {
   mode: "Feed" | "Page";

@@ -1,8 +1,10 @@
 import Form from "../components/Form";
 import Header from "../components/Header";
-import Posts from "../components/Posts";
+
+import { useAppSelector } from "../app/hooks";
 
 import { useState } from "react";
+import Posts from "../components/PostStuff/Posts";
 
 interface Props {
   mode: "Feed" | "Page";
