@@ -40,7 +40,8 @@ export const removePostByIdApi = async (id: string) => {
 };
 
 export const addLikeApi = async (id: string) => {
-  await api.patch(`/posts/${id}/likePost`);
+  const post = await api.patch(`/posts/${id}/likePost`);
+  console.log(post);
   const result = await fetchPostsApi();
   return result;
 };
