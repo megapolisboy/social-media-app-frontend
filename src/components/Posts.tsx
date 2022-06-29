@@ -11,6 +11,7 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ mode }) => {
   const allPosts = useAppSelector((state) => state.posts.posts);
+  const loading = useAppSelector((state) => state.posts.loading);
   const currentUserPosts = useAppSelector(
     (state) => state.posts.currentUserPosts
   );
@@ -28,7 +29,7 @@ const Posts: React.FC<Props> = ({ mode }) => {
   }, [mode]);
   return (
     <div className="grow">
-      {!posts.length ? (
+      {loading ? (
         <div className="ml-10">
           <Spinner />
         </div>
