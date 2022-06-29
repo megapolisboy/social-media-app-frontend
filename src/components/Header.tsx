@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { logout } from "../features/userSlice";
 import AvatarImage from "./UI/AvatarImage";
@@ -8,13 +9,22 @@ const Header = () => {
   const token = useAppSelector((state) => state.user.token);
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <div
       className="flex bg-white rounded-lg border-4 shadow-lg border-gray-300 w-full 
     text-center py-10 justify-between text-3xl items-center px-5"
     >
-      <h1 className="text-3xl md:text-5xl font-serif">INTROVERT</h1>
-      <div className="hidden md:flex items-center gap-5 ">
+      <h1
+        className="text-3xl md:text-5xl font-serif cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        INTROVERT
+      </h1>
+      <div
+        onClick={() => navigate("/page")}
+        className="cursor-pointer hidden md:flex items-center gap-5 "
+      >
         <AvatarImage />
         {currentUser && (
           <button className="p-2 rounded-md bg-white border-none cursor-pointer text-2xl hover:bg-gray-200">

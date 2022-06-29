@@ -25,7 +25,10 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector((state) => state.error.userErrorMessage);
 
-  const changePassType = () => {
+  const changePassType = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
     if (passType === "password") {
       setPassType("text");
     } else {
@@ -72,7 +75,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mx-3 m-3 overflow-hidden">
+    <div className="flex flex-col items-center overflow-hidden">
       <Header />
       <div className="flex flex-col items-center gap-3 mt-10 sm:w-96">
         <svg
@@ -138,7 +141,7 @@ const LoginPage = () => {
               {...register("password", { required: true })}
             />
             {/* TODO: fix eye problem */}
-            <button onClick={() => changePassType()}>
+            <button onClick={(e) => changePassType(e)}>
               {passType === "password" ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
