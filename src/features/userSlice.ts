@@ -39,6 +39,10 @@ export const postsSlice = createSlice({
       state.currentUser = undefined;
     },
 
+    subscribe: (state, action: PayloadAction<string>) => {},
+
+    unsubscribe: (state, action: PayloadAction<string>) => {},
+
     setUser: (state, action: PayloadAction<UserType>) => {
       state.currentUser = action.payload;
     },
@@ -50,6 +54,15 @@ export const postsSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
+
+    addSubscriber: (state, action: PayloadAction<UserType>) => {
+      state.currentUser.subscribers.push(action.payload);
+    },
+    removeSubscriber: (state, action: PayloadAction<UserType>) => {
+      state.currentUser.subscribers = state.currentUser.subscribers.filter(
+        (subscriber) => subscriber._id !== action.payload._id
+      );
+    },
   },
 });
 
@@ -59,8 +72,12 @@ export const {
   setUser,
   signUp,
   signIn,
+  subscribe,
+  unsubscribe,
   removeUser,
   setToken,
+  addSubscriber,
+  removeSubscriber,
 } = postsSlice.actions;
 export const selectUser = (state: RootState) => state.user.currentUser;
 export default postsSlice.reducer;

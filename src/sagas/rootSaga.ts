@@ -7,7 +7,13 @@ import {
   fetchPosts,
   removePostById,
 } from "../features/postsSlice";
-import { authGoogle, signIn, signUp } from "../features/userSlice";
+import {
+  authGoogle,
+  signIn,
+  signUp,
+  subscribe,
+  unsubscribe,
+} from "../features/userSlice";
 import {
   handleAddComment,
   handleAddLike,
@@ -16,7 +22,13 @@ import {
   handleFetchPosts,
   handleRemovePostById,
 } from "./postsWorker";
-import { handleAuthGoogle, handleSignIn, handleSignUp } from "./userWorker";
+import {
+  handleAuthGoogle,
+  handleSignIn,
+  handleSignUp,
+  handleSubscribe,
+  handleUnsubscribe,
+} from "./userWorker";
 
 export function* watcherSaga() {
   yield takeEvery(addPost.type, handleAddPost);
@@ -28,6 +40,8 @@ export function* watcherSaga() {
   yield takeEvery(authGoogle.type, handleAuthGoogle);
   yield takeEvery(signUp.type, handleSignUp);
   yield takeEvery(signIn.type, handleSignIn);
+  yield takeEvery(subscribe.type, handleSubscribe);
+  yield takeEvery(unsubscribe.type, handleUnsubscribe);
 
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
 }

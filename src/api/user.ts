@@ -16,6 +16,21 @@ const api = axios.create({
   // baseURL: "http://localhost:5000",
 });
 
+const tokenApi = axios.create({
+  baseURL: "https://social-media-app-introvert.herokuapp.com",
+  // baseURL: "http://localhost:5000",
+});
+
+tokenApi.interceptors.request.use((req) => {
+  const localStorageData = localStorage.getItem("persist:root");
+  const user = JSON.parse(localStorageData || "").user;
+  const token = JSON.parse(user).token;
+  if (token) {
+    req.headers!.Authorization = "Bearer " + token;
+  }
+  return req;
+});
+
 export const authGoogleApi = async (
   token: string
 ): Promise<GoogleResponseType> => {
@@ -33,4 +48,14 @@ export const signUpApi = async (user: UserLongType) => {
 export const signInApi = async (user: UserShortType) => {
   const userObj: SignUpResponseType = await api.post("/user/signin", user);
   return userObj;
+};
+
+export const subscribeApi = async (userId: string) => {
+  const user = await tokenApi.patch("/user/subscribe/" + userId);
+  return user.data;
+};
+
+export const unsubscribeApi = async (userId: string) => {
+  const user = await tokenApi.patch("/user/unsubscribe/" + userId);
+  return user.data;
 };

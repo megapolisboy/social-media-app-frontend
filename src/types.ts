@@ -25,6 +25,8 @@ export interface UserType {
   password?: string;
   picture?: string;
   posts: PostType[] | string[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
 }
 
 export interface UserShortType {
@@ -51,6 +53,8 @@ export interface GoogleUser {
   name: string;
   image?: string;
   posts: PostType[] | string[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
 }
 
 export interface GoogleResponseType {
