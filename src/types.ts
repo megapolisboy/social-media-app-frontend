@@ -1,6 +1,6 @@
 export interface PostType {
   _id: string;
-  comments: any[]; //TODO: CommentType[] | string[]
+  comments: Array<CommentType | string>;
   creator: UserType | string;
   createdAt: string;
   title: string;
@@ -56,4 +56,10 @@ export interface GoogleUser {
 export interface GoogleResponseType {
   result: GoogleUser;
   token: string;
+}
+
+export interface CommentType {
+  creator: UserType;
+  message: string;
+  createdAt: string;
 }

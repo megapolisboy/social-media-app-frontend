@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { act } from "react-dom/test-utils";
 import { RootState } from "../app/store";
-import { PostType, ShortPostType } from "../types";
+import { CommentType, PostType, ShortPostType } from "../types";
 
 interface PostsState {
   posts: PostType[];
   current?: PostType;
   currentUserPosts: PostType[];
   loading: boolean;
+}
+
+export interface AddCommentInput {
+  postId: string;
+  comment: CommentType;
 }
 
 const initialState: PostsState = {
@@ -33,6 +38,7 @@ export const postsSlice = createSlice({
   reducers: {
     addPost: (state, action: PayloadAction<ShortPostType>) => {},
     addLike: (state, action: PayloadAction<string>) => {},
+    addComment: (state, action: PayloadAction<AddCommentInput>) => {},
     removePostById: (state, action: PayloadAction<string>) => {},
     fetchPosts: (state) => {
       state.loading = true;
@@ -85,12 +91,30 @@ export const postsSlice = createSlice({
         (post) => post._id !== action.payload
       );
     },
+
+    addCommentToPost: (state, action: PayloadAction<AddCommentInput>) => {
+      const post = state.posts.find(
+        (post) => post._id === action.payload.postId
+      );
+      post.comments.push(action.payload.comment);
+    },
+
+    addCommentToCurrentUserPost: (
+      state,
+      action: PayloadAction<AddCommentInput>
+    ) => {
+      const post = state.currentUserPosts.find(
+        (post) => post._id === action.payload.postId
+      );
+      post.comments.push(action.payload.comment);
+    },
   },
 });
 
 export const {
   addPost,
   removePostById,
+  addComment,
   fetchPosts,
   setPosts,
   addLike,
@@ -103,6 +127,8 @@ export const {
   addCurrentUserPost,
   removePost,
   removeCurrentUserPost,
+  addCommentToPost,
+  addCommentToCurrentUserPost,
 } = postsSlice.actions;
 
 export const selectPosts = (state: RootState) => state.posts.posts;
