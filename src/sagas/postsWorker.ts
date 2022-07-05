@@ -1,6 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import {
+  addCommentApi,
   addLikeApi,
   addPostApi,
   fetchCurrentUserPostsApi,
@@ -8,6 +9,9 @@ import {
   removePostByIdApi,
 } from "../api/posts";
 import {
+  AddCommentInput,
+  addCommentToCurrentUserPost,
+  addCommentToPost,
   addCurrentUserPost,
   addNewPost,
   removeCurrentUserPost,
@@ -17,7 +21,7 @@ import {
   updateCurrentUserPostIfExists,
   updatePost,
 } from "../features/postsSlice";
-import { PostType } from "../types";
+import { CommentType, PostType } from "../types";
 
 //TODO: add error handling
 
@@ -53,4 +57,17 @@ export function* handleAddLike(action: PayloadAction<string>): Generator {
   const post = (yield call(addLikeApi, action.payload)) as unknown as PostType;
   yield put(updatePost(post));
   yield put(updateCurrentUserPostIfExists(post));
+}
+
+export function* handleAddComment(
+  action: PayloadAction<AddCommentInput>
+): Generator {
+  const comment = (yield call(
+    addCommentApi,
+    action.payload
+  )) as unknown as CommentType;
+  yield put(addCommentToPost({ postId: action.payload.postId, comment }));
+  yield put(
+    addCommentToCurrentUserPost({ postId: action.payload.postId, comment })
+  );
 }

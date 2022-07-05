@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AddCommentInput } from "../features/postsSlice";
 import { PostType, ShortPostType } from "../types";
 
 const api = axios.create({
@@ -37,6 +38,12 @@ export const removePostByIdApi = async (id: string) => {
 
 export const addLikeApi = async (id: string) => {
   const post = await api.patch(`/posts/${id}/likePost`);
-  console.log(post.data);
   return post.data;
+};
+
+export const addCommentApi = async (input: AddCommentInput) => {
+  const { postId: id, comment } = input;
+  const createdComment = await api.post(`/posts/${id}/comment`, comment);
+  console.log(createdComment.data);
+  return createdComment.data;
 };
