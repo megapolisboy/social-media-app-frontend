@@ -5,10 +5,13 @@ import Header from "../components/Header";
 import Comments from "../components/CommentsStuff/Comments";
 import RecomendationsWheel from "../components/RecomendationsWheel";
 import { RootState } from "../app/store";
+import { UserType } from "../types";
 
 const PostDetailsPage: React.FC = () => {
-  //const { id } = useParams();
-  const post = useAppSelector((state: RootState) => state.posts.current);
+  const { id } = useParams();
+  const post = useAppSelector((state: RootState) =>
+    state.posts.posts.find((post) => post._id === id)
+  );
 
   return (
     <div>
@@ -27,16 +30,15 @@ const PostDetailsPage: React.FC = () => {
           </div>
           <div className="mt-12 text-[24px] grow">{post?.message}</div>
           <div className="mt-12 text-[24px]">
-            {"Created by : " + post?.creator}
+            {"Created by : " +
+              (typeof post?.creator === "string"
+                ? post?.creator
+                : (post?.creator as UserType).name)}
           </div>
           <div className="mt-1">35 min ago</div>
           <div className="mt-14 max-w-[100px]">Like button</div>
         </div>
-        <img
-          className=""
-          src="http://northeastchamber.org/wp-content/uploads/2021/06/fireworks.jpeg"
-          alt=""
-        />
+        <img className="" src={post.selectedFile} alt="" />
       </div>
       <Comments />
       <RecomendationsWheel />
