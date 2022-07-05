@@ -10,6 +10,7 @@ import { logout } from "./features/userSlice";
 import { useJwt } from "react-jwt";
 import { fetchPosts } from "./features/postsSlice";
 import PostDetailsPage from "./pages/PostDetailsPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const token = useAppSelector((state) => state.user.token) ?? "";
@@ -34,7 +35,7 @@ function App() {
             )}
             {token && (
               <>
-                <Route path="/" element={<MainPage mode="Feed" />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/page" element={<MainPage mode="Page" />} />
 
                 <Route path="/:id" element={<PostDetailsPage />} />

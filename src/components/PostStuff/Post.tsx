@@ -68,13 +68,13 @@ const Post: React.FC<Props> = ({ post, mode }) => {
 
   return (
     <div
-      className={`shadow-2xl rounded-lg w-[300px] h-[370px] justify-self-center ${
-        isBeingLiked ? "scale-110" : ""
+      className={`shadow-2xl rounded-lg w-[300px] h-[370px] scale-75 ${
+        isBeingLiked ? "scale-80" : ""
       }`}
       onDoubleClick={addLikes}
     >
       <div className="relative">
-        <div className="z-[1] flex absolute  w-full text-white justify-between px-5">
+        <div className="z-[1] flex absolute w-full text-white justify-between px-5">
           <div className="">
             <div className="mt-2 font-bold text-xl">
               {(post.creator as UserType).name}

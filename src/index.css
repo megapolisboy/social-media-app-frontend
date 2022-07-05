@@ -11,4 +11,8 @@
   .signInButton {
     @apply cursor-pointer bg-blue-700 text-white rounded-sm w-full p-1 hover:bg-blue-800;
   }
+
+  .homePageMenuButton {
+    @apply flex gap-2 w-full text-lg rounded-lg hover:shadow-md text-left px-3 py-2 text-gray-400 hover:text-black;
+  }
 }
