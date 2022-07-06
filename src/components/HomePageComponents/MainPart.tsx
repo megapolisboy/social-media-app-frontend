@@ -1,7 +1,11 @@
 import { useAppSelector } from "../../app/hooks";
 import Posts from "../PostStuff/Posts";
 
-const MainPart = () => {
+interface Props {
+  mode: "Feed" | "Page";
+}
+
+const MainPart = ({ mode }) => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
   return (
     <div className="flex-grow max-w-[55%] bg-inherit flex flex-col">
@@ -57,7 +61,7 @@ const MainPart = () => {
           <span className="text-purple-400 cursor-pointer">Popular</span>
         </div>
       </div>
-      <Posts mode="Feed" />
+      <Posts mode={mode} />
     </div>
   );
 };

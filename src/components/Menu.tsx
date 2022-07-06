@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { logout } from "../features/userSlice";
+
 interface Props {
   makeFormVisible: () => void;
   page: "Home" | "Messages" | "Settings" | "Profile" | "Saved Posts";
 }
 
 const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   return (
     <div className="w-80 bg-white rounded-2xl flex flex-col justify-between">
       <div className="flex flex-col p-2 gap-2">
@@ -11,7 +18,13 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
           INTROVERT
         </h1>
         <h2 className="text-lg">Menu</h2>
-        <button className="homePageMenuButton">
+        <button
+          onClick={() => navigate("/")}
+          className={
+            "homePageMenuButton " +
+            (page === "Home" ? "shadow-md text-black" : "")
+          }
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -28,7 +41,13 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
           </svg>
           Home
         </button>
-        <button className="homePageMenuButton">
+        <button
+          onClick={() => navigate("/messages")}
+          className={
+            "homePageMenuButton " +
+            (page === "Messages" ? "shadow-md text-black" : "")
+          }
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -45,7 +64,13 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
           </svg>
           Messages
         </button>
-        <button className="homePageMenuButton">
+        <button
+          onClick={() => navigate("/profile")}
+          className={
+            "homePageMenuButton " +
+            (page === "Profile" ? "shadow-md text-black" : "")
+          }
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -62,7 +87,13 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
           </svg>
           Profile
         </button>
-        <button className="homePageMenuButton">
+        <button
+          className={
+            "homePageMenuButton " +
+            (page === "Saved Posts" ? "shadow-md text-black" : "")
+          }
+          onClick={() => navigate("/savedPosts")}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -79,7 +110,13 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
           </svg>
           Saved Posts
         </button>
-        <button className="homePageMenuButton">
+        <button
+          className={
+            "homePageMenuButton " +
+            (page === "Settings" ? "shadow-md text-black" : "")
+          }
+          onClick={() => navigate("/settings")}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -112,7 +149,10 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
         </button>
       </div>
       <div className="p-2">
-        <button className="homePageMenuButton text-purple-500 hover:shadow-none hover:text-red-700">
+        <button
+          onClick={() => dispatch(logout())}
+          className="homePageMenuButton text-purple-500 hover:shadow-none hover:text-red-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"

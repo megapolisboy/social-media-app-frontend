@@ -48,7 +48,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
     <form
       onSubmit={onSubmit}
       onClick={(e) => e.stopPropagation()}
-      className="w-full relative bg-purple-100 max-w-[400px] shadow-2xl rounded-lg flex flex-col gap-4 p-3"
+      className="w-full relative border-8 border-white bg-purple-100 max-w-[400px] shadow-2xl rounded-3xl flex flex-col gap-4 p-3"
     >
       <div className="text-[36px] text-center text-purple-500">
         Create a Post
@@ -112,12 +112,12 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
         <img src={src} className=" w-24" alt="" />
       </div>
       <input
-        className="cursor-pointer py-2 rounded-md bg-purple-700 text-white hover:border hover:border-purple-700 hover:bg-purple-200 hover:text-black"
+        className="cursor-pointer py-2 rounded-md bg-purple-700 text-white hover:bg-purple-800"
         type="submit"
         value="SUBMIT"
       />
       <button
-        className="cursor-pointer py-1 rounded-md bg-pink-300 text-black hover:bg-pink-700 hover:text-white"
+        className="cursor-pointer py-1 rounded-md border border-purple-800 hover:bg-purple-200"
         onClick={(e) => clearForm(e)}
       >
         CLEAR

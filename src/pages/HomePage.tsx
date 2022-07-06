@@ -7,12 +7,6 @@ import Menu from "../components/Menu";
 import Posts from "../components/PostStuff/Posts";
 
 const HomePage = () => {
-  const [menuActive, setMenuActive] = useState(false);
-  const token = useAppSelector((state) => state.user.token);
-  const currentUser = useAppSelector((state) => state.user.currentUser);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const [isFormShown, setIsFormShown] = useState(false);
 
   const makeFormVisible = () => {
@@ -26,7 +20,7 @@ const HomePage = () => {
     <div className="p-4 h-screen bg-gradient-to-r from-purple-100 to-purple-300">
       <div className="flex h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
         <Menu makeFormVisible={makeFormVisible} page="Home" />
-        <MainPart />
+        <MainPart mode="Feed" />
         <div className="w-96 bg-inherit border-l-2 border-white">UserStuff</div>
         {isFormShown && (
           <div
