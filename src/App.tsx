@@ -11,6 +11,10 @@ import { useJwt } from "react-jwt";
 import { fetchPosts } from "./features/postsSlice";
 import PostDetailsPage from "./pages/PostDetailsPage";
 import HomePage from "./pages/HomePage";
+import MessagesPage from "./pages/MessagesPage";
+import ProfilePage from "./pages/ProfilePage";
+import SavedPostsPage from "./pages/SavedPostsPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
   const token = useAppSelector((state) => state.user.token) ?? "";
@@ -36,6 +40,12 @@ function App() {
             {token && (
               <>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/messages" element={<MessagesPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/savedPosts" element={<SavedPostsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+
+                {/* This gonna be deleted */}
                 <Route path="/page" element={<MainPage mode="Page" />} />
 
                 <Route path="/:id" element={<PostDetailsPage />} />

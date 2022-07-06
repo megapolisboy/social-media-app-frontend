@@ -1,4 +1,9 @@
-const Menu = () => {
+interface Props {
+  makeFormVisible: () => void;
+  page: "Home" | "Messages" | "Settings" | "Profile" | "Saved Posts";
+}
+
+const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
   return (
     <div className="w-80 bg-white rounded-2xl flex flex-col justify-between">
       <div className="flex flex-col p-2 gap-2">
@@ -96,7 +101,10 @@ const Menu = () => {
           </svg>
           Settings
         </button>
-        <button className="flex gap-2 w-full text-lg rounded-lg border hover:text-white bg-purple-300 hover:bg-purple-400 text-left px-3 py-2">
+        <button
+          onClick={makeFormVisible}
+          className="flex gap-2 w-full text-lg rounded-lg border hover:text-white bg-purple-300 hover:bg-purple-400 text-left px-3 py-2"
+        >
           <div className="bg-purple-600 rounded-full flex justify-center  items-center w-6 h-6 ">
             <div className="text-white">+</div>
           </div>
