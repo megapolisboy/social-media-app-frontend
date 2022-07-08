@@ -1,11 +1,8 @@
 import { useAppSelector } from "../../app/hooks";
 import Posts from "../PostStuff/Posts";
+import AvatarImage from "../UI/AvatarImage";
 
-interface Props {
-  mode: "Feed" | "Page";
-}
-
-const MainPart = ({ mode }) => {
+const MainPart = () => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
   return (
     <div className="flex-grow max-w-[55%] bg-inherit flex flex-col">
@@ -13,19 +10,26 @@ const MainPart = ({ mode }) => {
         {/* followers.map(follower => <Storie storie={follower.storie})/> */}
         <div className="flex flex-col items-center gap-1">
           <div className="rounded-full h-16 w-16 relative cursor-pointer">
-            <img src={currentUser.picture} alt="" className="rounded-full" />
+            <AvatarImage w={16} currentUser={currentUser} />
             <div className="absolute bottom-0 right-0 bg-blue-700 h-5 w-5 flex justify-center items-center text-white rounded-full">
               <span>+</span>
             </div>
           </div>
-
-          <div className="text-xs">Vova</div>
+          <div className="text-xs">
+            {currentUser.name.split(" ")[0].slice(0, 10) +
+              (currentUser.name.split(" ")[0].length > 10 ? "..." : "")}
+          </div>
         </div>
+        {currentUser.subscriptions.map((user) => (
+          <div className="flex flex-col items-center gap-1 ">
+            <AvatarImage w={16} currentUser={user} />
+            <div className="text-xs">
+              {user.name.split(" ")[0].slice(0, 10) +
+                (user.name.split(" ")[0].length > 10 ? "..." : "")}
+            </div>
+          </div>
+        ))}
 
-        <div className="flex flex-col items-center gap-1 ">
-          <div className="rounded-full h-16 w-16 bg-white border-2 border-purple-500"></div>
-          <div className="text-xs">Vova</div>
-        </div>
         <div className="flex flex-col items-center gap-1">
           <div className="rounded-full h-16 w-16 bg-white border-2 border-purple-500"></div>
           <div className="text-xs">Vova</div>
@@ -61,7 +65,7 @@ const MainPart = ({ mode }) => {
           <span className="text-purple-400 cursor-pointer">Popular</span>
         </div>
       </div>
-      <Posts mode={mode} />
+      <Posts mode="Feed" />
     </div>
   );
 };

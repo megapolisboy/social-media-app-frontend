@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import AvatarImage from "../components/UI/AvatarImage";
-import Header from "../components/Header";
 import Comments from "../components/CommentsStuff/Comments";
 import RecomendationsWheel from "../components/RecomendationsWheel";
 import { RootState } from "../app/store";
@@ -15,7 +14,6 @@ const PostDetailsPage: React.FC = () => {
 
   return (
     <div>
-      <Header />
       <div className="flex p-1.5 gap-4">
         <div className="grow">
           <div

@@ -1,4 +1,3 @@
-import MainPage from "./pages/MainPage";
 import "./App.css";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
@@ -8,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { useEffect } from "react";
 import { logout } from "./features/userSlice";
 import { useJwt } from "react-jwt";
-import { fetchPosts } from "./features/postsSlice";
 import PostDetailsPage from "./pages/PostDetailsPage";
 import HomePage from "./pages/HomePage";
 import MessagesPage from "./pages/MessagesPage";
@@ -42,11 +40,11 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/messages" element={<MessagesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/savedPosts" element={<SavedPostsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
 
                 {/* This gonna be deleted */}
-                <Route path="/page" element={<MainPage mode="Page" />} />
 
                 <Route path="/:id" element={<PostDetailsPage />} />
                 <Route path="/auth" element={<Navigate replace to="/" />} />

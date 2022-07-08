@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import Header from "../components/Header";
 import { removeUserErrorMessage } from "../features/errorSlice";
 import { authGoogle, signIn, signUp } from "../features/userSlice";
 import { UserLongType } from "../types";
@@ -76,7 +75,6 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center overflow-hidden">
-      <Header />
       <div className="flex flex-col items-center gap-3 mt-10 sm:w-96">
         <svg
           xmlns="http://www.w3.org/2000/svg"
