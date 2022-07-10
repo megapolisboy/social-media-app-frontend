@@ -51,11 +51,12 @@ export const signInApi = async (user: UserShortType) => {
 };
 
 export const subscribeApi = async (userId: string) => {
-  const user = await tokenApi.patch("/user/subscribe/" + userId);
-  return user.data;
+  const result = await tokenApi.patch("/user/subscribe/" + userId);
+  console.log(result);
+  return result.data;
 };
 
-export const unsubscribeApi = async (userId: string) => {
-  const user = await tokenApi.patch("/user/unsubscribe/" + userId);
-  return user.data;
+export const getAllUsersApi = async (): Promise<UserType[]> => {
+  const users = await tokenApi.get("/user");
+  return users.data;
 };

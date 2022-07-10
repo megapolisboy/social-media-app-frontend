@@ -1,24 +1,62 @@
-import { useAppSelector } from "../app/hooks";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getAllUsers, selectUsers, subscribe } from "../features/userSlice";
+import { UserType } from "../types";
+import AvatarImage from "./UI/AvatarImage";
 
 const UserStuff = () => {
   const posts = useAppSelector((state) => state.posts.posts).slice(0, 3);
   const currentUser = useAppSelector((state) => state.user.currentUser);
+  const dispatch = useAppDispatch();
+  const users = useAppSelector((state) => state.user.users);
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState<string>("");
+
+  const isFollowed = (user: UserType) => {
+    const following = currentUser.subscriptions.find(
+      (sub) => sub._id === user._id
+    );
+
+    return Boolean(following);
+  };
+
+  const searchForUsers = () => {
+    console.log(search);
+    setSearch("");
+  };
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
   return (
     <div className="w-96 bg-inherit border-l-2 border-white flex flex-col gap-5 p-5">
       <div className="flex items-center gap-3">
         <input
           type="text"
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Search"
           className="h-16 border-4 text-white p-5 text-xl placeholder:text-white text-center border-white bg-inherit rounded-full focus:outline-none"
         />
-        <button className="rounded-full bg-inherit w-12 h-12 flex items-center justify-center border-2 border-white">
+        <button
+          onClick={searchForUsers}
+          className="hover:bg-purple-300 rounded-full bg-inherit w-12 h-12 flex items-center justify-center border-2 border-white"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="white"
+            className="h-6 w-6 text-white font-bold"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
           >
-            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
           </svg>
         </button>
       </div>
@@ -30,43 +68,45 @@ const UserStuff = () => {
           </h2>
         </div>
         <div className="flex flex-col mx-1 gap-4 mt-2 border-b border-white h-52 py-4 overflow-y-auto scrollbar-hide ">
-          {currentUser.subscriptions.map((user) => (
-            <div className="flex justify-between items-center">
-              <div className="flex justify-start gap-4 items-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 border border-white" />
-                <div>{user.name}</div>
+          {users
+            .filter((user) => user._id !== currentUser._id)
+            .map((user) => (
+              <div key={user._id} className="flex justify-between items-center">
+                <div
+                  onClick={() => navigate("/profile/" + user._id)}
+                  className="flex justify-start gap-4 items-center cursor-pointer"
+                >
+                  <AvatarImage w={12} currentUser={user} />
+                  <div className="">{user.name}</div>
+                </div>
+                {!isFollowed(user) ? (
+                  <button
+                    onClick={() => dispatch(subscribe(user._id))}
+                    className="bg-purple-500 w-24 h-8 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
+                  >
+                    Follow
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => dispatch(subscribe(user._id))}
+                    className="bg-purple-300 border border-white w-24 h-8 text-black rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
+                  >
+                    Following
+                  </button>
+                )}
               </div>
-              <button className="bg-purple-500 w-24 h-8 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black">
-                Follow
-              </button>
-            </div>
-          ))}
-
-          <div className="flex justify-between items-center">
-            <div className="flex justify-start gap-4 items-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 border border-white" />
-              <div>Albert Rudenko</div>
-            </div>
-            <button className="bg-purple-100 w-24 h-8 text-black border border-white rounded-md overflow-y-auto">
-              Following
-            </button>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="flex justify-start gap-4 items-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 border border-white" />
-              <div>Albert Rudenko</div>
-            </div>
-            <button className="bg-purple-500 w-24 h-8 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black">
-              Follow
-            </button>
-          </div>
+            ))}
         </div>
       </div>
       <div className="flex flex-col">
         <h2 className="text-xl">Recommended Posts</h2>
         <div className="flex flex-col gap-[2px]">
           {posts.map((post) => (
-            <div className="cursor-pointer flex bg-white w-full mt-3 rounded-2xl justify-start items-center px-3 py-1 gap-3">
+            <div
+              key={post._id}
+              onClick={() => navigate(`/${post._id}`)}
+              className="cursor-pointer flex bg-white w-full mt-3 rounded-2xl justify-start items-center px-3 py-1 gap-3"
+            >
               <img
                 className="w-28 rounded-2xl h-14 object-cover blur-[1px]"
                 src={

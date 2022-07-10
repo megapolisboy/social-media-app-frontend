@@ -11,9 +11,9 @@ const AvatarImage: React.FC<Props> = ({ w, currentUser }) => {
     <>
       {!currentUser.picture && (
         <button
-          className={`w-${w} h-${w} flex justify-center items-center cursor-pointer bg-purple-700 text-xl text-white rounded-full`}
+          className={`w-${w} h-${w} flex items-center justify-center cursor-pointer bg-purple-700 text-xl text-white rounded-full`}
         >
-          {currentUser.name[0].toUpperCase()}
+          <span>{currentUser.name[0].toUpperCase()}</span>
         </button>
       )}
       {currentUser.picture && (

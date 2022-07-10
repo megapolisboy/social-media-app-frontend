@@ -10,9 +10,10 @@ import { useState } from "react";
 interface Props {
   post: PostType;
   mode: "Feed" | "Page";
+  isProfilePage?: boolean;
 }
 
-const Post: React.FC<Props> = ({ post, mode }) => {
+const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
@@ -59,10 +60,11 @@ const Post: React.FC<Props> = ({ post, mode }) => {
   };
 
   const isPostLikedByCurrentUser = () => {
-    const likes = (post.likes as UserType[]).filter(
-      (user) => user.email === currentUser.email
+    const likes = post.likes.filter((user) =>
+      typeof user === "object"
+        ? user._id === currentUser._id
+        : user === currentUser._id
     );
-
     return likes.length > 0;
   };
 
@@ -77,7 +79,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
         <div className="z-[1] flex absolute w-full text-white justify-between px-3">
           <div className="">
             <div className="mt-2 font-bold text-xl">
-              {(post.creator as UserType).name}
+              {mode === "Feed" && (post.creator as UserType).name}
             </div>
             <div>{countTime(post.createdAt)}</div>
           </div>
@@ -152,7 +154,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
               post.likes.length !== 1 ? "S" : ""
             }`}</div>
           </div>
-          {mode === "Page" && (
+          {mode === "Page" && isProfilePage && (
             <div
               className="flex cursor-pointer hover:bg-slate-100 rounded-sm p-2"
               onClick={removePost}

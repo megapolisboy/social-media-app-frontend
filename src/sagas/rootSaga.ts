@@ -9,10 +9,10 @@ import {
 } from "../features/postsSlice";
 import {
   authGoogle,
+  getAllUsers,
   signIn,
   signUp,
   subscribe,
-  unsubscribe,
 } from "../features/userSlice";
 import {
   handleAddComment,
@@ -24,10 +24,10 @@ import {
 } from "./postsWorker";
 import {
   handleAuthGoogle,
+  handleGetAllUsers,
   handleSignIn,
   handleSignUp,
   handleSubscribe,
-  handleUnsubscribe,
 } from "./userWorker";
 
 export function* watcherSaga() {
@@ -41,7 +41,7 @@ export function* watcherSaga() {
   yield takeEvery(signUp.type, handleSignUp);
   yield takeEvery(signIn.type, handleSignIn);
   yield takeEvery(subscribe.type, handleSubscribe);
-  yield takeEvery(unsubscribe.type, handleUnsubscribe);
+  yield takeEvery(getAllUsers.type, handleGetAllUsers);
 
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
 }
