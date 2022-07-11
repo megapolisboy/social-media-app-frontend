@@ -33,7 +33,7 @@ export const postsSlice = createSlice({
 
     signIn: (state, action: PayloadAction<SignInPayload>) => {},
 
-    getAllUsers: (state) => {
+    getAllUsers: (state, action: PayloadAction<string>) => {
       console.log("!!!");
     },
 

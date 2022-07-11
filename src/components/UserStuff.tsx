@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isArray } from "util";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getAllUsers, selectUsers, subscribe } from "../features/userSlice";
 import { UserType } from "../types";
@@ -11,6 +12,7 @@ const UserStuff = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.user.users);
   const navigate = useNavigate();
+  console.log(users);
 
   const [search, setSearch] = useState<string>("");
 
@@ -23,12 +25,12 @@ const UserStuff = () => {
   };
 
   const searchForUsers = () => {
-    console.log(search);
+    dispatch(getAllUsers(search));
     setSearch("");
   };
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllUsers(""));
   }, [dispatch]);
 
   return (
@@ -36,6 +38,7 @@ const UserStuff = () => {
       <div className="flex items-center gap-3">
         <input
           type="text"
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search"
           className="h-16 border-4 text-white p-5 text-xl placeholder:text-white text-center border-white bg-inherit rounded-full focus:outline-none"
@@ -63,39 +66,40 @@ const UserStuff = () => {
       <div className="flex flex-col">
         <div className="flex justify-between mx-1">
           <h2 className="text-xl">Suggestions</h2>
-          <h2 className="text-xl font-bold text-purple-500 cursor-pointer">
-            See all
-          </h2>
         </div>
         <div className="flex flex-col mx-1 gap-4 mt-2 border-b border-white h-52 py-4 overflow-y-auto scrollbar-hide ">
-          {users
-            .filter((user) => user._id !== currentUser._id)
-            .map((user) => (
-              <div key={user._id} className="flex justify-between items-center">
+          {Array.isArray(users) &&
+            users
+              .filter((user) => user._id !== currentUser._id)
+              .map((user) => (
                 <div
-                  onClick={() => navigate("/profile/" + user._id)}
-                  className="flex justify-start gap-4 items-center cursor-pointer"
+                  key={user._id}
+                  className="flex justify-between items-center"
                 >
-                  <AvatarImage w={12} currentUser={user} />
-                  <div className="">{user.name}</div>
+                  <div
+                    onClick={() => navigate("/profile/" + user._id)}
+                    className="flex justify-start gap-4 items-center cursor-pointer"
+                  >
+                    <AvatarImage w={12} currentUser={user} />
+                    <div className="">{user.name}</div>
+                  </div>
+                  {!isFollowed(user) ? (
+                    <button
+                      onClick={() => dispatch(subscribe(user._id))}
+                      className="bg-purple-500 w-24 h-8 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
+                    >
+                      Follow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => dispatch(subscribe(user._id))}
+                      className="bg-purple-300 border border-white w-24 h-8 text-black rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
+                    >
+                      Following
+                    </button>
+                  )}
                 </div>
-                {!isFollowed(user) ? (
-                  <button
-                    onClick={() => dispatch(subscribe(user._id))}
-                    className="bg-purple-500 w-24 h-8 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
-                  >
-                    Follow
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => dispatch(subscribe(user._id))}
-                    className="bg-purple-300 border border-white w-24 h-8 text-black rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
-                  >
-                    Following
-                  </button>
-                )}
-              </div>
-            ))}
+              ))}
         </div>
       </div>
       <div className="flex flex-col">

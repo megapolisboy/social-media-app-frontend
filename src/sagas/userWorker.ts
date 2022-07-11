@@ -73,9 +73,9 @@ export function* handleSubscribe(action: PayloadAction<string>): Generator {
   }
 }
 
-export function* handleGetAllUsers(): Generator {
+export function* handleGetAllUsers(action: PayloadAction<string>): Generator {
   try {
-    const users = (yield call(getAllUsersApi)) as UserType[];
+    const users = (yield call(getAllUsersApi, action.payload)) as UserType[];
     yield put(setUsers(users));
   } catch (err: any) {
     console.log("Error while fetching users");

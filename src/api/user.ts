@@ -56,7 +56,7 @@ export const subscribeApi = async (userId: string) => {
   return result.data;
 };
 
-export const getAllUsersApi = async (): Promise<UserType[]> => {
-  const users = await tokenApi.get("/user");
+export const getAllUsersApi = async (search: string): Promise<UserType[]> => {
+  const users = await tokenApi.get("/user/" + search);
   return users.data;
 };
