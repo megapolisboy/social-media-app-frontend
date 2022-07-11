@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NavigateFunction } from "react-router-dom";
 import { RootState } from "../app/store";
-import { UserLongType, UserShortType, UserType } from "../types";
+import { PostType, UserLongType, UserShortType, UserType } from "../types";
 
 interface UserState {
   currentUser: UserType | undefined;
+  currentlyOpenUser: UserType | undefined;
   token: string | undefined;
+  users: UserType[];
 }
 
 export interface SignUpPayload {
@@ -20,7 +22,9 @@ export interface SignInPayload {
 
 const initialState: UserState = {
   currentUser: undefined,
+  currentlyOpenUser: undefined,
   token: undefined,
+  users: [],
 };
 
 export const postsSlice = createSlice({
@@ -31,6 +35,10 @@ export const postsSlice = createSlice({
 
     signIn: (state, action: PayloadAction<SignInPayload>) => {},
 
+    getAllUsers: (state, action: PayloadAction<string>) => {
+      console.log("!!!");
+    },
+
     authGoogle: (state, action: PayloadAction<string>) => {
       // TODO: call sign in with tokenId api
     },
@@ -39,9 +47,9 @@ export const postsSlice = createSlice({
       state.currentUser = undefined;
     },
 
-    subscribe: (state, action: PayloadAction<string>) => {},
+    getCurrentlyOpenUser: (state, action: PayloadAction<string>) => {},
 
-    unsubscribe: (state, action: PayloadAction<string>) => {},
+    subscribe: (state, action: PayloadAction<string>) => {},
 
     setUser: (state, action: PayloadAction<UserType>) => {
       state.currentUser = action.payload;
@@ -55,13 +63,49 @@ export const postsSlice = createSlice({
       state.token = action.payload;
     },
 
-    addSubscriber: (state, action: PayloadAction<UserType>) => {
-      state.currentUser.subscribers.push(action.payload);
+    addSubscription: (state, action: PayloadAction<UserType>) => {
+      state.currentUser.subscriptions.push(action.payload);
+      const user = state.users.find((user) => user._id === action.payload._id);
+      user.subscribers.push(state.currentUser);
     },
-    removeSubscriber: (state, action: PayloadAction<UserType>) => {
-      state.currentUser.subscribers = state.currentUser.subscribers.filter(
-        (subscriber) => subscriber._id !== action.payload._id
+    removeSubscription: (state, action: PayloadAction<UserType>) => {
+      state.currentUser.subscriptions = state.currentUser.subscriptions.filter(
+        (subscription) => subscription._id !== action.payload._id
       );
+      const user = state.users.find((user) => user._id === action.payload._id);
+      user.subscribers = user.subscribers.filter(
+        (sub) => sub._id !== state.currentUser._id
+      );
+    },
+
+    setUsers: (state, action: PayloadAction<UserType[]>) => {
+      state.users = action.payload;
+    },
+
+    updateUsersPost: (state, action: PayloadAction<PostType>) => {
+      const user = state.users.find(
+        (user) => user._id === (action.payload.creator as UserType)._id
+      );
+
+      user.posts = (user.posts as PostType[]).filter(
+        (post) => post._id !== action.payload._id
+      );
+
+      user.posts.push(action.payload);
+    },
+
+    setCurrentlyOpenUser: (state, action: PayloadAction<UserType>) => {
+      state.currentlyOpenUser = action.payload;
+    },
+
+    updateCurrentlyOpenUserPost: (state, action: PayloadAction<PostType>) => {
+      const postIndex = state.currentlyOpenUser.posts.findIndex(
+        (post) => post._id === action.payload._id
+      );
+
+      if (postIndex > -1) {
+        state.currentlyOpenUser.posts[postIndex] = action.payload;
+      }
     },
   },
 });
@@ -72,12 +116,22 @@ export const {
   setUser,
   signUp,
   signIn,
+  getAllUsers,
   subscribe,
-  unsubscribe,
   removeUser,
+  getCurrentlyOpenUser,
   setToken,
-  addSubscriber,
-  removeSubscriber,
+  addSubscription,
+  removeSubscription,
+  setUsers,
+  updateUsersPost,
+  setCurrentlyOpenUser,
+  updateCurrentlyOpenUserPost,
 } = postsSlice.actions;
+
 export const selectUser = (state: RootState) => state.user.currentUser;
+export const selectUsers = (state: RootState) => state.user.users;
+export const selectCurrentlyOpenUser = (state: RootState) =>
+  state.user.currentlyOpenUser;
+
 export default postsSlice.reducer;

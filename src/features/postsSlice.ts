@@ -17,17 +17,6 @@ export interface AddCommentInput {
 
 const initialState: PostsState = {
   posts: [],
-  current: {
-    _id: "0",
-    creator: "Oleg",
-    title: "Life in the small town",
-    message: "goodfd guihgiuhfdusghi dufhgidsugh",
-    tags: ["#happy", "#cool"],
-    likes: [],
-    selectedFile: "",
-    comments: [],
-    createdAt: "",
-  },
   currentUserPosts: [],
   loading: false,
 };
@@ -49,9 +38,6 @@ export const postsSlice = createSlice({
     },
     fetchCurrentUserPosts: (state) => {
       state.loading = true;
-    },
-    setCurrent: (state, action: PayloadAction<PostType>) => {
-      state.current = action.payload;
     },
     setCurrentUserPosts: (state, action: PayloadAction<PostType[]>) => {
       state.currentUserPosts = action.payload;
@@ -119,7 +105,6 @@ export const {
   setPosts,
   addLike,
   fetchCurrentUserPosts,
-  setCurrent,
   setCurrentUserPosts,
   updatePost,
   updateCurrentUserPostIfExists,

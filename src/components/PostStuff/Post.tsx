@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { removePostById, setCurrent } from "../../features/postsSlice";
+import { removePostById } from "../../features/postsSlice";
 import { PostType, UserType } from "../../types";
 import { addLike } from "../../features/postsSlice";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,10 @@ import { useState } from "react";
 interface Props {
   post: PostType;
   mode: "Feed" | "Page";
+  isProfilePage?: boolean;
 }
 
-const Post: React.FC<Props> = ({ post, mode }) => {
+const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
@@ -34,7 +35,6 @@ const Post: React.FC<Props> = ({ post, mode }) => {
   }
 
   const moveToPostPage = () => {
-    dispatch(setCurrent(post));
     navigate(`/${post._id}`);
   };
 
@@ -60,25 +60,26 @@ const Post: React.FC<Props> = ({ post, mode }) => {
   };
 
   const isPostLikedByCurrentUser = () => {
-    const likes = (post.likes as UserType[]).filter(
-      (user) => user.email === currentUser.email
+    const likes = post.likes.filter((user) =>
+      typeof user === "object"
+        ? user._id === currentUser._id
+        : user === currentUser._id
     );
-
     return likes.length > 0;
   };
 
   return (
     <div
-      className={`shadow-2xl rounded-lg w-[300px] h-[370px] justify-self-center ${
+      className={`rounded-lg shadow-md border border-purple-200 w-[225px] h-[278px] bg-white ${
         isBeingLiked ? "scale-110" : ""
       }`}
       onDoubleClick={addLikes}
     >
       <div className="relative">
-        <div className="z-[1] flex absolute  w-full text-white justify-between px-5">
+        <div className="z-[1] flex absolute w-full text-white justify-between px-3">
           <div className="">
             <div className="mt-2 font-bold text-xl">
-              {(post.creator as UserType).name}
+              {mode === "Feed" && (post.creator as UserType).name}
             </div>
             <div>{countTime(post.createdAt)}</div>
           </div>
@@ -90,7 +91,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
           </h1>
         </div>
         <img
-          className="rounded-t-lg h-40 w-full object-cover"
+          className="rounded-t-lg h-28 w-full object-cover"
           src={
             post.selectedFile ||
             "http://northeastchamber.org/wp-content/uploads/2021/06/fireworks.jpeg"
@@ -98,13 +99,13 @@ const Post: React.FC<Props> = ({ post, mode }) => {
           alt=""
         />
       </div>
-      <div className="flex flex-col px-5 gap-3 mt-5">
+      <div className="flex flex-col px-3 gap-[6px] mt-3">
         <div className="text-slate-300">
-          {post.tags.join(" ").length > 30
-            ? `${post.tags.join(" ").substring(0, 30)}...`
+          {post.tags.join(" ").length > 20
+            ? `${post.tags.join(" ").substring(0, 20)}...`
             : post.tags.join(" ")}
         </div>
-        <div className="text-[36px]">
+        <div className="text-[28px]">
           {post.title.length > 12
             ? `${post.title.substring(0, 12)}...`
             : post.title}
@@ -153,7 +154,7 @@ const Post: React.FC<Props> = ({ post, mode }) => {
               post.likes.length !== 1 ? "S" : ""
             }`}</div>
           </div>
-          {mode === "Page" && (
+          {mode === "Page" && isProfilePage && (
             <div
               className="flex cursor-pointer hover:bg-slate-100 rounded-sm p-2"
               onClick={removePost}

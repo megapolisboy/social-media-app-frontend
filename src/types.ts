@@ -7,7 +7,7 @@ export interface PostType {
   message: string;
   tags: string[];
   selectedFile?: string;
-  likes: UserType[] | string[];
+  likes: Array<UserType | string>;
 }
 
 export interface ShortPostType {

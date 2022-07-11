@@ -21,7 +21,12 @@ import {
   updateCurrentUserPostIfExists,
   updatePost,
 } from "../features/postsSlice";
-import { CommentType, PostType } from "../types";
+import {
+  getCurrentlyOpenUser,
+  updateCurrentlyOpenUserPost,
+  updateUsersPost,
+} from "../features/userSlice";
+import { CommentType, PostType, UserType } from "../types";
 
 //TODO: add error handling
 
@@ -57,6 +62,8 @@ export function* handleAddLike(action: PayloadAction<string>): Generator {
   const post = (yield call(addLikeApi, action.payload)) as unknown as PostType;
   yield put(updatePost(post));
   yield put(updateCurrentUserPostIfExists(post));
+  yield put(updateUsersPost(post));
+  yield put(updateCurrentlyOpenUserPost(post));
 }
 
 export function* handleAddComment(

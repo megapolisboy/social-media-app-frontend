@@ -2,20 +2,23 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import {
   authGoogleApi,
+  getAllUsersApi,
+  getUserByIdApi,
   signInApi,
   signUpApi,
   subscribeApi,
-  unsubscribeApi,
 } from "../api/user";
 import {
   removeUserErrorMessage,
   setUserErrorMessage,
 } from "../features/errorSlice";
 import {
-  addSubscriber,
-  removeSubscriber,
+  addSubscription,
+  removeSubscription,
+  setCurrentlyOpenUser,
   setToken,
   setUser,
+  setUsers,
   SignInPayload,
   SignUpPayload,
 } from "../features/userSlice";
@@ -58,24 +61,36 @@ export function* handleSignIn(action: PayloadAction<SignInPayload>): Generator {
 
 export function* handleSubscribe(action: PayloadAction<string>): Generator {
   try {
-    const user = (yield call(
-      subscribeApi,
-      action.payload
-    )) as unknown as UserType;
-    yield put(addSubscriber(user));
+    const result = (yield call(subscribeApi, action.payload)) as any;
+    const act: string = result.action;
+    const user: UserType = result.user;
+
+    if (act === "subscribe") {
+      yield put(addSubscription(user));
+    } else {
+      yield put(removeSubscription(user));
+    }
   } catch (err: any) {
     alert("Can't subscribe");
   }
 }
 
-export function* handleUnsubscribe(action: PayloadAction<string>): Generator {
+export function* handleGetAllUsers(action: PayloadAction<string>): Generator {
   try {
-    const user = (yield call(
-      unsubscribeApi,
-      action.payload
-    )) as unknown as UserType;
-    yield put(removeSubscriber(user));
+    const users = (yield call(getAllUsersApi, action.payload)) as UserType[];
+    yield put(setUsers(users));
   } catch (err: any) {
-    alert("Can't subscribe");
+    console.log("Error while fetching users");
+  }
+}
+
+export function* handleGetCurrentlyOpenUser(
+  action: PayloadAction<string>
+): Generator {
+  try {
+    const user = (yield call(getUserByIdApi, action.payload)) as UserType;
+    yield put(setCurrentlyOpenUser(user));
+  } catch (err: any) {
+    console.log("Error while fetching user");
   }
 }

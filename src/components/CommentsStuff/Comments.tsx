@@ -10,6 +10,7 @@ comments = ["Apple", "Orange", "Banana"];
 interface Props {}
 
 const Comments: React.FC<Props> = ({}) => {
+  const currentUser = useAppSelector((state) => state.user.currentUser);
   const name = useAppSelector(
     (state: RootState) => state.posts.current?.creator
   );
@@ -18,7 +19,7 @@ const Comments: React.FC<Props> = ({}) => {
     <div>
       <hr />
       <div className="flex">
-        <AvatarImage />
+        <AvatarImage w={5} currentUser={currentUser} />
         <div className="">
           <div>{name as string}</div>
           <input className="max-w-[250px] shadow-2xl" type="text" />
