@@ -10,6 +10,7 @@ import {
 import {
   authGoogle,
   getAllUsers,
+  getCurrentlyOpenUser,
   signIn,
   signUp,
   subscribe,
@@ -25,6 +26,7 @@ import {
 import {
   handleAuthGoogle,
   handleGetAllUsers,
+  handleGetCurrentlyOpenUser,
   handleSignIn,
   handleSignUp,
   handleSubscribe,
@@ -42,6 +44,7 @@ export function* watcherSaga() {
   yield takeEvery(signIn.type, handleSignIn);
   yield takeEvery(subscribe.type, handleSubscribe);
   yield takeEvery(getAllUsers.type, handleGetAllUsers);
+  yield takeEvery(getCurrentlyOpenUser.type, handleGetCurrentlyOpenUser);
 
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
 }

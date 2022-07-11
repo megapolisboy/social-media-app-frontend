@@ -5,6 +5,7 @@ import { PostType, UserLongType, UserShortType, UserType } from "../types";
 
 interface UserState {
   currentUser: UserType | undefined;
+  currentlyOpenUser: UserType | undefined;
   token: string | undefined;
   users: UserType[];
 }
@@ -21,6 +22,7 @@ export interface SignInPayload {
 
 const initialState: UserState = {
   currentUser: undefined,
+  currentlyOpenUser: undefined,
   token: undefined,
   users: [],
 };
@@ -44,6 +46,8 @@ export const postsSlice = createSlice({
       state.token = undefined;
       state.currentUser = undefined;
     },
+
+    getCurrentlyOpenUser: (state, action: PayloadAction<string>) => {},
 
     subscribe: (state, action: PayloadAction<string>) => {},
 
@@ -89,6 +93,10 @@ export const postsSlice = createSlice({
 
       user.posts.push(action.payload);
     },
+
+    setCurrentlyOpenUser: (state, action: PayloadAction<UserType>) => {
+      state.currentlyOpenUser = action.payload;
+    },
   },
 });
 
@@ -101,14 +109,18 @@ export const {
   getAllUsers,
   subscribe,
   removeUser,
+  getCurrentlyOpenUser,
   setToken,
   addSubscription,
   removeSubscription,
   setUsers,
   updateUsersPost,
+  setCurrentlyOpenUser,
 } = postsSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.currentUser;
 export const selectUsers = (state: RootState) => state.user.users;
+export const selectCurrentlyOpenUser = (state: RootState) =>
+  state.user.currentlyOpenUser;
 
 export default postsSlice.reducer;

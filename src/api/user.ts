@@ -60,3 +60,9 @@ export const getAllUsersApi = async (search: string): Promise<UserType[]> => {
   const users = await tokenApi.get("/user/" + search);
   return users.data;
 };
+
+export const getUserByIdApi = async (userId: string): Promise<UserType> => {
+  const user = await tokenApi.get("/user/id/" + userId);
+  console.log(user);
+  return user.data;
+};

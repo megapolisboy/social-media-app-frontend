@@ -1,5 +1,10 @@
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectUsers, subscribe } from "../../features/userSlice";
+import {
+  getCurrentlyOpenUser,
+  selectCurrentlyOpenUser,
+  subscribe,
+} from "../../features/userSlice";
 import { UserType } from "../../types";
 import Posts from "../PostStuff/Posts";
 import AvatarImage from "../UI/AvatarImage";
@@ -12,9 +17,7 @@ const MainPart = ({ userId }) => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
 
-  const potentialUser = useAppSelector(selectUsers).find(
-    (user) => user._id === userId
-  );
+  const potentialUser = useAppSelector(selectCurrentlyOpenUser);
   let user: UserType;
 
   if (potentialUser && potentialUser._id !== currentUser._id) {
@@ -31,6 +34,10 @@ const MainPart = ({ userId }) => {
     return Boolean(following);
   };
 
+  useEffect(() => {
+    dispatch(getCurrentlyOpenUser(userId));
+  }, [userId, currentUser.subscriptions]);
+
   return (
     <div className="flex-grow max-w-[55%] bg-inherit flex flex-col gap-4">
       <div className="flex justify-around items-center py-2 border-2 border-blue-200 bg-white rounded-2xl">
@@ -40,7 +47,7 @@ const MainPart = ({ userId }) => {
         </div>
         <div className="flex gap-5">
           <p className="text-center text-lg 2xl:text-2xl ">
-            {user.posts.length} <br /> posts
+            {user.posts?.length} <br /> posts
           </p>
           <p className="text-center text-lg 2xl:text-2xl">
             {user.subscribers?.length} <br /> followers

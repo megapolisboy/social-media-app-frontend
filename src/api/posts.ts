@@ -44,6 +44,5 @@ export const addLikeApi = async (id: string) => {
 export const addCommentApi = async (input: AddCommentInput) => {
   const { postId: id, comment } = input;
   const createdComment = await api.post(`/posts/${id}/comment`, comment);
-  console.log(createdComment.data);
   return createdComment.data;
 };

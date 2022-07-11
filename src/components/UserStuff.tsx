@@ -12,7 +12,6 @@ const UserStuff = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.user.users);
   const navigate = useNavigate();
-  console.log(users);
 
   const [search, setSearch] = useState<string>("");
 

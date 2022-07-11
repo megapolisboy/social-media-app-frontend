@@ -4,9 +4,6 @@ import MainPart from "../components/ProfileComponents/MainPart";
 import Menu from "../components/Menu";
 import UserStuff from "../components/UserStuff";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { selectUsers } from "../features/userSlice";
-import { UserType } from "../types";
 
 const ProfilePage = () => {
   const [isFormShown, setIsFormShown] = useState(false);

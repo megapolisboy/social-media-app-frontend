@@ -3,6 +3,7 @@ import { call, put } from "redux-saga/effects";
 import {
   authGoogleApi,
   getAllUsersApi,
+  getUserByIdApi,
   signInApi,
   signUpApi,
   subscribeApi,
@@ -14,6 +15,7 @@ import {
 import {
   addSubscription,
   removeSubscription,
+  setCurrentlyOpenUser,
   setToken,
   setUser,
   setUsers,
@@ -79,5 +81,16 @@ export function* handleGetAllUsers(action: PayloadAction<string>): Generator {
     yield put(setUsers(users));
   } catch (err: any) {
     console.log("Error while fetching users");
+  }
+}
+
+export function* handleGetCurrentlyOpenUser(
+  action: PayloadAction<string>
+): Generator {
+  try {
+    const user = (yield call(getUserByIdApi, action.payload)) as UserType;
+    yield put(setCurrentlyOpenUser(user));
+  } catch (err: any) {
+    console.log("Error while fetching user");
   }
 }

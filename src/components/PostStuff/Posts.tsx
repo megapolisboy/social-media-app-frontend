@@ -17,7 +17,7 @@ const Posts: React.FC<Props> = ({ mode, user }) => {
   const currentUserPosts = useAppSelector(
     (state) => state.posts.currentUserPosts
   );
-  const posts = mode === "Feed" ? allPosts : currentUserPosts;
+  const posts = mode === "Feed" ? allPosts : user.posts;
   const dispatch = useAppDispatch();
   const isProfilePage = currentUser._id === user?._id;
   useEffect(() => {
