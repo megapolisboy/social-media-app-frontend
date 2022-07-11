@@ -20,7 +20,7 @@ const MainPart = ({ userId }) => {
   const potentialUser = useAppSelector(selectCurrentlyOpenUser);
   let user: UserType;
 
-  if (potentialUser && potentialUser._id !== currentUser._id) {
+  if (userId && potentialUser && potentialUser._id !== currentUser._id) {
     user = potentialUser;
   } else {
     user = currentUser;
@@ -35,8 +35,8 @@ const MainPart = ({ userId }) => {
   };
 
   useEffect(() => {
-    dispatch(getCurrentlyOpenUser(userId));
-  }, [userId, currentUser.subscriptions]);
+    dispatch(getCurrentlyOpenUser(userId || currentUser._id));
+  }, [dispatch, userId, currentUser.subscriptions]);
 
   return (
     <div className="flex-grow max-w-[55%] bg-inherit flex flex-col gap-4">

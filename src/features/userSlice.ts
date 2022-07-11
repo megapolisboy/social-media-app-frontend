@@ -97,6 +97,16 @@ export const postsSlice = createSlice({
     setCurrentlyOpenUser: (state, action: PayloadAction<UserType>) => {
       state.currentlyOpenUser = action.payload;
     },
+
+    updateCurrentlyOpenUserPost: (state, action: PayloadAction<PostType>) => {
+      const postIndex = state.currentlyOpenUser.posts.findIndex(
+        (post) => post._id === action.payload._id
+      );
+
+      if (postIndex > -1) {
+        state.currentlyOpenUser.posts[postIndex] = action.payload;
+      }
+    },
   },
 });
 
@@ -116,6 +126,7 @@ export const {
   setUsers,
   updateUsersPost,
   setCurrentlyOpenUser,
+  updateCurrentlyOpenUserPost,
 } = postsSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.currentUser;
