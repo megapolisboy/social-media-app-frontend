@@ -18,7 +18,7 @@ const AvatarImage: React.FC<Props> = ({ w, currentUser }) => {
       )}
       {currentUser?.picture && (
         <button
-          className={`w-${w} h-${w} cursor-pointer bg-purple-700 text-xl text-white rounded-full text-center`}
+          className={`w-${w} h-${w} cursor-pointer text-xl text-white rounded-full text-center`}
         >
           <img
             className="rounded-full border-none"

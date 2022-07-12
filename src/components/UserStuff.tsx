@@ -6,7 +6,12 @@ import { getAllUsers, selectUsers, subscribe } from "../features/userSlice";
 import { UserType } from "../types";
 import AvatarImage from "./UI/AvatarImage";
 
-const UserStuff = () => {
+interface Props {
+  isSearchShown?: boolean;
+  setIsSearchShown?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const UserStuff: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
   const posts = useAppSelector((state) => state.posts.posts).slice(0, 3);
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const dispatch = useAppDispatch();
@@ -33,14 +38,19 @@ const UserStuff = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-96 bg-inherit border-l-2 border-white flex flex-col gap-5 p-5">
-      <div className="flex items-center gap-3">
+    <div
+      className={
+        (isSearchShown ? "flex " : "hidden ") +
+        "md:w-96 bg-inherit md:border-l-2 border-white md:flex flex-col gap-5 p-5"
+      }
+    >
+      <div className="flex items-center gap-3 sm:gap-10 md:gap-3">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search"
-          className="h-16 border-4 text-white p-5 text-xl placeholder:text-white text-center border-white bg-inherit rounded-full focus:outline-none"
+          className="h-16 w-4/5 border-4 text-white p-5 text-xl placeholder:text-white text-center border-white bg-inherit rounded-full focus:outline-none"
         />
         <button
           onClick={searchForUsers}
@@ -66,7 +76,7 @@ const UserStuff = () => {
         <div className="flex justify-between mx-1">
           <h2 className="text-xl">Suggestions</h2>
         </div>
-        <div className="flex flex-col mx-1 gap-4 mt-2 border-b border-white h-52 py-4 overflow-y-auto scrollbar-hide ">
+        <div className="flex flex-col gap-4 mt-2 border-b border-white h-52 py-4 overflow-y-auto scrollbar-hide ">
           {Array.isArray(users) &&
             users
               .filter((user) => user._id !== currentUser._id)

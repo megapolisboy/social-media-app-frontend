@@ -8,9 +8,10 @@ import Spinner from "../Spinner";
 interface Props {
   mode: "Feed" | "Page";
   user?: UserType;
+  isSearchShown?: boolean;
 }
 
-const Posts: React.FC<Props> = ({ mode, user }) => {
+const Posts: React.FC<Props> = ({ mode, user, isSearchShown }) => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const allPosts = useAppSelector((state) => state.posts.posts);
   const loading = useAppSelector((state) => state.posts.loading);
@@ -35,7 +36,12 @@ const Posts: React.FC<Props> = ({ mode, user }) => {
           <Spinner />
         </div>
       ) : (
-        <div className="grid mt-3 pb-3 gap-6 bg-none grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 overflow-y-auto justify-items-center scrollbar-hide">
+        <div
+          className={
+            (isSearchShown ? "hidden " : "grid ") +
+            "md:grid mt-3 pb-3 gap-6 bg-none grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 overflow-y-auto justify-items-center scrollbar-hide"
+          }
+        >
           {posts.map((post) => (
             <Post
               post={post as PostType}

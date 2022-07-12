@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   return (
     <div className="p-4 h-screen bg-gradient-to-r from-purple-100 to-purple-300">
-      <div className="flex h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
+      <div className="flex flex-col md:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
         <Menu makeFormVisible={makeFormVisible} page="Profile" />
         <MainPart userId={id} />
         <UserStuff />

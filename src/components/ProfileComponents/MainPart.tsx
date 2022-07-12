@@ -39,20 +39,20 @@ const MainPart = ({ userId }) => {
   }, [dispatch, userId, currentUser.subscriptions]);
 
   return (
-    <div className="flex-grow max-w-[55%] bg-inherit flex flex-col gap-4">
+    <div className="flex-grow w-full md:max-w-[55%] bg-inherit flex flex-col gap-4">
       <div className="flex justify-around items-center py-2 border-2 border-blue-200 bg-white rounded-2xl">
         <div className="flex flex-col items-center h-full gap-1">
           <AvatarImage w={20} currentUser={user} />
-          <div>{user.name}</div>
+          <div className="text-center">{user.name}</div>
         </div>
-        <div className="flex gap-5">
-          <p className="text-center text-lg 2xl:text-2xl ">
+        <div className="flex gap-2 md:gap-5 text-md sm:text-lg">
+          <p className="text-center 2xl:text-2xl ">
             {user.posts?.length} <br /> posts
           </p>
-          <p className="text-center text-lg 2xl:text-2xl">
+          <p className="text-center 2xl:text-2xl">
             {user.subscribers?.length} <br /> followers
           </p>
-          <p className="text-center text-lg 2xl:text-2xl">
+          <p className="text-center 2xl:text-2xl">
             {user.subscriptions?.length} <br /> following
           </p>
         </div>
