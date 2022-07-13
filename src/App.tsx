@@ -43,6 +43,7 @@ function App() {
                 <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/savedPosts" element={<SavedPostsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/:search" element={<HomePage />} />
 
                 {/* This gonna be deleted */}
 

@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   makeFormVisible: () => void;
-  setIsSearchShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSearchShown?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MobileMenu = ({ makeFormVisible, setIsSearchShown }) => {
+const MobileMenu: React.FC<Props> = ({ makeFormVisible, setIsSearchShown }) => {
   const navigate = useNavigate();
   return (
-    <div className="z-10 fixed flex md:hidden justify-between px-2 h-12 bg-white border-purple-400 w-full bottom-0 left-0">
+    <div className="z-10 fixed flex lg:hidden justify-between sm:justify-center sm:gap-12 px-2 h-12 bg-white border-purple-400 w-full bottom-0 left-0">
       <button
         className="mobileMenuButton"
         onClick={() => {
@@ -73,7 +73,13 @@ const MobileMenu = ({ makeFormVisible, setIsSearchShown }) => {
       </button>
       <button
         className="mobileMenuButton"
-        onClick={() => setIsSearchShown(true)}
+        onClick={() => {
+          if (!setIsSearchShown) {
+            navigate("/search");
+          } else {
+            setIsSearchShown(true);
+          }
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

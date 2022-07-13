@@ -15,14 +15,14 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full flex-grow md:max-w-[55%] bg-inherit flex flex-col">
-      <div className="flex md:hidden justify-between items-center">
-        <h1 className="block md:hidden text-2xl mb-1 text-purple-700 cursor-pointer font-bold">
+    <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">
+      <div className="flex lg:hidden justify-between items-center">
+        <h1 className="block text-2xl md:text-3xl mb-1 text-purple-700 cursor-pointer font-bold">
           INTROVERT
         </h1>
         <button
           onClick={() => navigate("/messages")}
-          className="rounded-fullw-8 h-8 flex justify-center items-center"
+          className="rounded-full w-8 h-8 flex justify-center items-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
           onClick={() => navigate("/profile")}
         >
           <div className="rounded-full h-16 w-16 relative cursor-pointer">
-            <AvatarImage w={16} currentUser={currentUser} />
+            <AvatarImage w="profile" currentUser={currentUser} />
             <div className="absolute bottom-0 right-0 bg-blue-700 h-5 w-5 flex justify-center items-center text-white rounded-full">
               <span>+</span>
             </div>
@@ -62,7 +62,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
             className="flex flex-col items-center gap-1"
             onClick={() => navigate("/profile/" + user._id)}
           >
-            <AvatarImage w={16} currentUser={user} />
+            <AvatarImage w="profile" currentUser={user} />
             <div className="text-xs">
               {user.name.split(" ")[0].slice(0, 10) +
                 (user.name.split(" ")[0].length > 10 ? "..." : "")}
@@ -72,10 +72,10 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
       </div>
       <div
         className={
-          (isSearchShown ? "hidden " : "flex ") + "md:flex justify-between "
+          (isSearchShown ? "hidden " : "flex ") + "lg:flex justify-between "
         }
       >
-        <span className="hidden md:block">Feeds</span>
+        <span className="hidden lg:block">Feeds</span>
         <div className="flex gap-3">
           <span className="text-slate-400 cursor-pointer">All</span>
           <span className="text-slate-500 cursor-pointer">Following</span>

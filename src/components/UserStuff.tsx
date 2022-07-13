@@ -41,7 +41,7 @@ const UserStuff: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
     <div
       className={
         (isSearchShown ? "flex " : "hidden ") +
-        "md:w-96 bg-inherit md:border-l-2 border-white md:flex flex-col gap-5 p-5"
+        "lg:w-96 bg-inherit lg:border-l-2 border-white lg:flex flex-col gap-5 p-5"
       }
     >
       <div className="flex items-center gap-3 sm:gap-10 md:gap-3">
@@ -89,7 +89,7 @@ const UserStuff: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
                     onClick={() => navigate("/profile/" + user._id)}
                     className="flex justify-start gap-4 items-center cursor-pointer"
                   >
-                    <AvatarImage w={12} currentUser={user} />
+                    <AvatarImage w="user" currentUser={user} />
                     <div className="">{user.name}</div>
                   </div>
                   {!isFollowed(user) ? (

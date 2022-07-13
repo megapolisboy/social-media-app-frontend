@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Form from "../components/Form";
 import MainPart from "../components/HomePageComponents/MainPart";
@@ -12,6 +12,12 @@ const HomePage = () => {
   const [isFormShown, setIsFormShown] = useState(false);
   const [isSearchShown, setIsSearchShown] = useState(false);
 
+  const { search } = useParams();
+
+  useEffect(() => {
+    setIsSearchShown(search === "search");
+  }, [search]);
+
   const makeFormVisible = () => {
     setIsFormShown(true);
   };
@@ -20,8 +26,8 @@ const HomePage = () => {
     setIsFormShown(false);
   };
   return (
-    <div className="p-4 h-full md:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
-      <div className="flex flex-col md:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
+    <div className="p-4 h-full lg:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
+      <div className="flex flex-col lg:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
         <Menu makeFormVisible={makeFormVisible} page="Home" />
         <MainPart
           isSearchShown={isSearchShown}

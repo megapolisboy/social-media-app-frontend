@@ -18,7 +18,12 @@ const Posts: React.FC<Props> = ({ mode, user, isSearchShown }) => {
   const currentUserPosts = useAppSelector(
     (state) => state.posts.currentUserPosts
   );
-  const posts = mode === "Feed" ? allPosts : user.posts;
+  const posts =
+    mode === "Feed"
+      ? allPosts
+      : user._id === currentUser._id
+      ? currentUserPosts
+      : user.posts;
   const dispatch = useAppDispatch();
   const isProfilePage = currentUser._id === user?._id;
   useEffect(() => {
@@ -39,7 +44,7 @@ const Posts: React.FC<Props> = ({ mode, user, isSearchShown }) => {
         <div
           className={
             (isSearchShown ? "hidden " : "grid ") +
-            "md:grid mt-3 pb-3 gap-6 bg-none grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 overflow-y-auto justify-items-center scrollbar-hide"
+            "lg:grid mt-3 pb-3 gap-6 bg-none grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 overflow-y-auto justify-items-center scrollbar-hide"
           }
         >
           {posts.map((post) => (

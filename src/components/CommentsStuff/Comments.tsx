@@ -19,7 +19,6 @@ const Comments: React.FC<Props> = ({}) => {
     <div>
       <hr />
       <div className="flex">
-        <AvatarImage w={5} currentUser={currentUser} />
         <div className="">
           <div>{name as string}</div>
           <input className="max-w-[250px] shadow-2xl" type="text" />
