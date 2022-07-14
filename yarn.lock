@@ -2070,6 +2070,13 @@
     hoist-non-react-statics "^3.3.0"
     redux "^4.0.0"
 
+"@types/react-truncate@^2.3.4":
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/@types/react-truncate/-/react-truncate-2.3.4.tgz#1d5002e71e393b81b7877a147992a050f40075fa"
+  integrity sha512-+ugDlho66dRn7Sw/lPkE/wlOi0KUIRwY2KOiUiehWjFf7EmiMDjMpHqrBhiLJfH2Z9EC+qRBHC9o7iZoEmmWQw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^18.0.0":
   version "18.0.12"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.12.tgz"
@@ -7511,6 +7518,11 @@ react-jwt@^1.1.6:
   integrity sha512-Yp+FmwkTvYUuO5gu6sFApLXFuMAIAlh1NEfxcB2EGnmS1chKqXXv77vp23IphV1UpSyMtm0wrphUZfDSr8GiSA==
   optionalDependencies:
     fsevents "^2.3.2"
+
+react-lines-ellipsis@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.15.1.tgz#7e2c3bda08458ef6116fac31e0e75cdd0285ff77"
+  integrity sha512-u84rLwoQx+ixuIdPGY9MrdduBBkjeGVchBH502Mn0ExPgHBEch3Sd7CNEQQSBm3w3+aePzXaD6dVaczdURmNPg==
 
 react-redux@^8.0.2:
   version "8.0.2"

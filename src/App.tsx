@@ -46,8 +46,9 @@ function App() {
 
                 {/* This gonna be deleted */}
 
-                <Route path="/:id" element={<PostDetailsPage />} />
+                <Route path="/posts/:id" element={<PostDetailsPage />} />
                 <Route path="/auth" element={<Navigate replace to="/" />} />
+                <Route path="/:search" element={<HomePage />} />
               </>
             )}
           </Routes>
