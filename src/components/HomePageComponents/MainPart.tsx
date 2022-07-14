@@ -13,6 +13,9 @@ interface Props {
 const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
+  const [filter, setFilter] = useState<
+    "following" | "newest" | "popular" | null
+  >(null);
 
   return (
     <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">
@@ -41,7 +44,6 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
         </button>
       </div>
       <div className="flex-none border-b-2 border-white flex gap-3 overflow-x-scroll h-28 scrollbar scrollbar-thumb-purple-300 scrollbar-track-white">
-        {/* followers.map(follower => <Storie storie={follower.storie})/> */}
         <div
           className="flex flex-col items-center gap-1"
           onClick={() => navigate("/profile")}
@@ -77,13 +79,41 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
       >
         <span className="hidden lg:block">Feeds</span>
         <div className="flex gap-3">
-          <span className="text-slate-400 cursor-pointer">All</span>
-          <span className="text-slate-500 cursor-pointer">Following</span>
-          <span className="text-gray-400 cursor-pointer">Newest</span>
-          <span className="text-purple-400 cursor-pointer">Popular</span>
+          <span
+            onClick={() => setFilter(null)}
+            className={`${
+              !filter ? "font-bold" : ""
+            } text-slate-400 cursor-pointer`}
+          >
+            All
+          </span>
+          <span
+            onClick={() => setFilter("following")}
+            className={`${
+              filter === "following" ? "font-bold" : ""
+            } text-slate-500 cursor-pointer`}
+          >
+            Following
+          </span>
+          <span
+            onClick={() => setFilter("newest")}
+            className={`${
+              filter === "newest" ? "font-bold" : ""
+            } text-gray-400 cursor-pointer`}
+          >
+            Newest
+          </span>
+          <span
+            onClick={() => setFilter("popular")}
+            className={`${
+              filter === "popular" ? "font-bold" : ""
+            } text-purple-400 cursor-pointer`}
+          >
+            Popular
+          </span>
         </div>
       </div>
-      <Posts mode="Feed" isSearchShown={isSearchShown} />
+      <Posts mode="Feed" isSearchShown={isSearchShown} filter={filter} />
     </div>
   );
 };

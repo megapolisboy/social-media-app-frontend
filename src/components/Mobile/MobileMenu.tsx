@@ -8,7 +8,7 @@ interface Props {
 const MobileMenu: React.FC<Props> = ({ makeFormVisible, setIsSearchShown }) => {
   const navigate = useNavigate();
   return (
-    <div className="z-10 fixed flex lg:hidden justify-between sm:justify-center sm:gap-12 px-2 h-12 bg-white border-purple-400 w-full bottom-0 left-0">
+    <div className="z-10 fixed flex lg:hidden justify-between sm:justify-center sm:gap-12 px-2 h-12 bg-white border-purple-200 w-full bottom-0 left-0 rounded-t-2xl border-2">
       <button
         className="mobileMenuButton"
         onClick={() => {

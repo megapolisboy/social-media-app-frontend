@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 //@ts-ignore
 import { DateTime } from "luxon";
 import { useState } from "react";
+import LinesEllipsis from "react-lines-ellipsis";
 
 interface Props {
   post: PostType;
@@ -36,7 +37,7 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
   }
 
   const moveToPostPage = () => {
-    navigate(`/${post._id}`);
+    navigate(`/posts/${post._id}`);
   };
 
   const countTime = (isoString: string) => {
@@ -121,19 +122,30 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
         </div>
         <div className="flex flex-col px-3 gap-[6px] mt-3">
           <div className="text-slate-300">
-            {post.tags.join(" ").length > 20
-              ? `${post.tags.join(" ").substring(0, 20)}...`
-              : post.tags.join(" ")}
+            <LinesEllipsis
+              text={post.tags.join(" ")}
+              maxLine={1}
+              basedOn="letters"
+              style={{ "overflow-wrap": "anywhere" }}
+            />
           </div>
           <div className="text-[28px]">
-            {post.title.length > 12
-              ? `${post.title.substring(0, 12)}...`
-              : post.title}
+            {
+              <LinesEllipsis
+                text={post.title}
+                maxLine={1}
+                basedOn="letters"
+                style={{ "overflow-wrap": "anywhere" }}
+              />
+            }
           </div>
           <div className="">
-            {post.message.length > 32
-              ? `${post.message.substring(0, 32)}...`
-              : post.message}
+            <LinesEllipsis
+              text={post.message}
+              basedOn="letters"
+              maxLine={1}
+              style={{ "overflow-wrap": "anywhere" }}
+            />
           </div>
           <div className="flex w-full justify-between -ml-2">
             <div

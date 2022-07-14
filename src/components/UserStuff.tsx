@@ -117,7 +117,7 @@ const UserStuff: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
           {posts.map((post) => (
             <div
               key={post._id}
-              onClick={() => navigate(`/${post._id}`)}
+              onClick={() => navigate(`/posts/${post._id}`)}
               className="cursor-pointer flex bg-white w-full mt-3 rounded-2xl justify-start items-center px-3 py-1 gap-3"
             >
               <img
