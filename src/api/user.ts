@@ -4,6 +4,7 @@ import {
   GoogleUser,
   PostType,
   SignUpResponseType,
+  StoryType,
   UserLongType,
   UserShortType,
   UserType,
@@ -23,7 +24,7 @@ const tokenApi = axios.create({
 
 tokenApi.interceptors.request.use((req) => {
   const localStorageData = localStorage.getItem("persist:root");
-  const user = JSON.parse(localStorageData || "").user;
+  const user = JSON.parse(localStorageData || "").token;
   const token = JSON.parse(user).token;
   if (token) {
     req.headers!.Authorization = "Bearer " + token;
@@ -52,7 +53,6 @@ export const signInApi = async (user: UserShortType) => {
 
 export const subscribeApi = async (userId: string) => {
   const result = await tokenApi.patch("/user/subscribe/" + userId);
-  console.log(result);
   return result.data;
 };
 
@@ -63,6 +63,16 @@ export const getAllUsersApi = async (search: string): Promise<UserType[]> => {
 
 export const getUserByIdApi = async (userId: string): Promise<UserType> => {
   const user = await tokenApi.get("/user/id/" + userId);
-  console.log(user);
   return user.data;
+};
+
+export const addStoryApi = async (story: string): Promise<StoryType> => {
+  const result = await tokenApi.post("/user/story", { story });
+  return result.data;
+};
+
+export const getCurrentUserApi = async (): Promise<UserType> => {
+  const result = await tokenApi.get("/user/current");
+  console.log(result);
+  return result.data;
 };

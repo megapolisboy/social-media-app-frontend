@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import postsReducer from "../features/postsSlice";
 import userReducer from "../features/userSlice";
 import errorReducer from "../features/errorSlice";
+import tokenReducer from "../features/tokenSlice";
 import { watcherSaga } from "../sagas/rootSaga";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -15,12 +16,13 @@ const reducers = combineReducers({
   posts: postsReducer,
   user: userReducer,
   error: errorReducer,
+  token: tokenReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["error", "posts"],
+  whitelist: ["token"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

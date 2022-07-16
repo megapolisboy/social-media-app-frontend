@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import MobileMenu from "../Mobile/MobileMenu";
 import Posts from "../PostStuff/Posts";
 import AvatarImage from "../UI/AvatarImage";
+import { addStory } from "../../features/userSlice";
 
 interface Props {
   isSearchShown: boolean;
@@ -12,10 +13,43 @@ interface Props {
 
 const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [filter, setFilter] = useState<
     "following" | "newest" | "popular" | null
   >(null);
+
+  const getBase64 = (file) => {
+    return new Promise((resolve) => {
+      let fileInfo;
+      let baseURL = "";
+      // Make new FileReader
+      let reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        baseURL = reader.result as string;
+        resolve(baseURL);
+      };
+    });
+  };
+
+  const handleFileInputChange = (e) => {
+    let file = e.target.files[0];
+
+    getBase64(file)
+      .then((result) => {
+        file["base64"] = result;
+        dispatch(addStory(result as string));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">
@@ -46,12 +80,19 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
       <div className="flex-none border-b-2 border-white flex gap-3 overflow-x-scroll h-28 scrollbar scrollbar-thumb-purple-300 scrollbar-track-white">
         <div
           className="flex flex-col items-center gap-1"
-          onClick={() => navigate("/profile")}
+          // onClick={() => navigate("/profile")}
         >
           <div className="rounded-full h-16 w-16 relative cursor-pointer">
             <AvatarImage w="profile" currentUser={currentUser} />
             <div className="absolute bottom-0 right-0 bg-blue-700 h-5 w-5 flex justify-center items-center text-white rounded-full">
-              <span>+</span>
+              <label htmlFor="file-upload">+</label>
+
+              <input
+                id="file-upload"
+                type="file"
+                className="hidden"
+                onChange={handleFileInputChange}
+              />
             </div>
           </div>
           <div className="text-xs">

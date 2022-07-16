@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
+import { tokenLogout } from "../features/tokenSlice";
 import { logout } from "../features/userSlice";
 
 interface Props {
@@ -150,7 +151,10 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
       </div>
       <div className="p-2">
         <button
-          onClick={() => dispatch(logout())}
+          onClick={() => {
+            dispatch(logout());
+            dispatch(tokenLogout());
+          }}
           className="homePageMenuButton text-purple-500 hover:shadow-none hover:text-red-700"
         >
           <svg
