@@ -10,6 +10,8 @@ import { logout } from "./features/userSlice";
 import { useJwt } from "react-jwt";
 import { fetchPosts } from "./features/postsSlice";
 import PostDetailsPage from "./pages/PostDetailsPage";
+import { Intro } from "./pages/Intro";
+import React from "react";
 
 function App() {
   const token = useAppSelector((state) => state.user.token) ?? "";
@@ -28,8 +30,10 @@ function App() {
           <Routes>
             {!token && (
               <>
-                <Route path="/auth" element={<LoginPage />} />
-                <Route path="*" element={<Navigate replace to="/auth" />} />
+                <Route path="/intro" element={<Intro/>} />
+                <Route path="*" element={<Navigate replace to="/intro"/>} />
+                <Route path="/signIn" element={<LoginPage/>} />
+                <Route path="/signUp" element={<LoginPage />} />
               </>
             )}
             {token && (

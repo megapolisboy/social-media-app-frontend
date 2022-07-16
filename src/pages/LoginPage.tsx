@@ -1,4 +1,5 @@
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ import { UserLongType } from "../types";
 type Password = "text" | "password";
 
 const LoginPage = () => {
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);//TODO: передавать через пропс
   const [passType, setPassType] = useState<Password>("password");
   const navigate = useNavigate();
 

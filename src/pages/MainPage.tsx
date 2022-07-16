@@ -5,6 +5,7 @@ import { useAppSelector } from "../app/hooks";
 
 import { useState } from "react";
 import Posts from "../components/PostStuff/Posts";
+import React from "react";
 
 interface Props {
   mode: "Feed" | "Page";

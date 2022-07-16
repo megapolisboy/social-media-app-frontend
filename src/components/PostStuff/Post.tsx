@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 //@ts-ignore
 import { DateTime } from "luxon";
 import { useState } from "react";
+import React from "react";
 
 interface Props {
   post: PostType;
