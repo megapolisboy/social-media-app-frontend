@@ -10,6 +10,18 @@ export interface PostType {
   likes: Array<UserType | string>;
 }
 
+export interface CurrentUserType {
+  _id: string;
+  name: string;
+  email: string;
+  password?: string;
+  picture?: string;
+  posts: PostType[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
+  stories?: Array<StoryType>;
+}
+
 export interface ShortPostType {
   title: string;
   message: string;
@@ -27,6 +39,7 @@ export interface UserType {
   posts: PostType[] | string[];
   subscribers: UserType[];
   subscriptions: UserType[];
+  stories?: Array<StoryType | string>;
 }
 
 export interface UserShortType {
@@ -65,5 +78,12 @@ export interface GoogleResponseType {
 export interface CommentType {
   creator: UserType;
   message: string;
+  createdAt: string;
+}
+
+export interface StoryType {
+  _id: string;
+  creator: UserType;
+  post: string;
   createdAt: string;
 }

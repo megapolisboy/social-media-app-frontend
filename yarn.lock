@@ -7497,6 +7497,11 @@ react-hook-form@^7.32.0:
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.32.0.tgz"
   integrity sha512-AFUwl9MwVVnZZsFZW7Egc8PVyWem6c6/9FBq29Acsikm+8ecJCkqOn2Tl48GApFnXBgoBBEHC3zosjYvPfsGNg==
 
+react-insta-stories@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/react-insta-stories/-/react-insta-stories-2.4.2.tgz#66f87d32e95a108328135ad0849c3ab7ed57d2fb"
+  integrity sha512-6X19bfa02uvHt3HA5VkLWee2vHef90gfRVYrZwC7WrQ3/bTcDWTdj6mGuw7W+HL/MxB99D7UUYM/ABFeA8CrxQ==
+
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -8253,6 +8258,11 @@ statuses@2.0.1:
   version "1.5.0"
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   integrity sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==
+
+stories-react@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/stories-react/-/stories-react-1.0.18.tgz#ecc85bc6d794c02ae098616bdcbe9f48c4a24b22"
+  integrity sha512-P2+YhquVzJCp8zWi1AIZ+LIpwE3ihSgjyDVJMPpTrVXGhJ9GzgqKHDcqNLC4+R5PJrOI0WlQBAGPz/RWoAyzqA==
 
 string-length@^4.0.1:
   version "4.0.2"

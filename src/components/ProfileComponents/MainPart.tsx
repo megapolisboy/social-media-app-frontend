@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { tokenLogout } from "../../features/tokenSlice";
 import {
   getCurrentlyOpenUser,
   logout,
@@ -108,7 +109,10 @@ const MainPart = ({ userId }) => {
         ) : (
           <div className="flex flex-col justify-center gap-1 items-center">
             <button
-              onClick={() => dispatch(logout())}
+              onClick={() => {
+                dispatch(logout());
+                dispatch(tokenLogout());
+              }}
               className="bg-purple-500 w-24 py-2 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
             >
               Log out
@@ -159,7 +163,10 @@ const MainPart = ({ userId }) => {
           ) : (
             <div className="w-full flex gap-4 items-center">
               <button
-                onClick={() => dispatch(logout())}
+                onClick={() => {
+                  dispatch(logout());
+                  dispatch(tokenLogout());
+                }}
                 className="flex-1 bg-purple-500 w-24 py-2 text-white rounded-md hover:border hover:border-purple-400 hover:bg-purple-100 hover:text-black"
               >
                 Log out

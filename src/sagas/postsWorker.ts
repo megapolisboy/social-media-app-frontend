@@ -10,20 +10,20 @@ import {
 } from "../api/posts";
 import {
   AddCommentInput,
-  addCommentToCurrentUserPost,
   addCommentToPost,
-  addCurrentUserPost,
   addNewPost,
-  removeCurrentUserPost,
   removePost,
-  setCurrentUserPosts,
   setPosts,
-  updateCurrentUserPostIfExists,
   updatePost,
 } from "../features/postsSlice";
 import {
+  addCommentToCurrentUserPost,
+  addCurrentUserPost,
   getCurrentlyOpenUser,
+  removeCurrentUserPost,
+  setCurrentUserPosts,
   updateCurrentlyOpenUserPost,
+  updateCurrentUserPostIfExists,
   updateUsersPost,
 } from "../features/userSlice";
 import { CommentType, PostType, UserType } from "../types";
@@ -62,7 +62,6 @@ export function* handleAddLike(action: PayloadAction<string>): Generator {
   const post = (yield call(addLikeApi, action.payload)) as unknown as PostType;
   yield put(updatePost(post));
   yield put(updateCurrentUserPostIfExists(post));
-  yield put(updateUsersPost(post));
   yield put(updateCurrentlyOpenUserPost(post));
 }
 

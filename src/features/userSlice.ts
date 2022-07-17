@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NavigateFunction } from "react-router-dom";
 import { RootState } from "../app/store";
-import { PostType, UserLongType, UserShortType, UserType } from "../types";
+import {
+  CurrentUserType,
+  PostType,
+  StoryType,
+  UserLongType,
+  UserShortType,
+  UserType,
+} from "../types";
+import { AddCommentInput } from "./postsSlice";
 
 interface UserState {
-  currentUser: UserType | undefined;
+  currentUser: CurrentUserType | undefined;
   currentlyOpenUser: UserType | undefined;
-  token: string | undefined;
   users: UserType[];
 }
 
@@ -23,7 +30,6 @@ export interface SignInPayload {
 const initialState: UserState = {
   currentUser: undefined,
   currentlyOpenUser: undefined,
-  token: undefined,
   users: [],
 };
 
@@ -35,15 +41,14 @@ export const postsSlice = createSlice({
 
     signIn: (state, action: PayloadAction<SignInPayload>) => {},
 
-    getAllUsers: (state, action: PayloadAction<string>) => {
-      console.log("!!!");
-    },
+    getAllUsers: (state, action: PayloadAction<string>) => {},
+
+    getCurrentUser: (state) => {},
 
     authGoogle: (state, action: PayloadAction<string>) => {
       // TODO: call sign in with tokenId api
     },
     logout: (state) => {
-      state.token = undefined;
       state.currentUser = undefined;
     },
 
@@ -51,16 +56,14 @@ export const postsSlice = createSlice({
 
     subscribe: (state, action: PayloadAction<string>) => {},
 
+    addStory: (state, action: PayloadAction<string>) => {},
+
     setUser: (state, action: PayloadAction<UserType>) => {
-      state.currentUser = action.payload;
+      state.currentUser = action.payload as CurrentUserType;
     },
 
     removeUser: (state) => {
       state.currentUser = undefined;
-    },
-
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
     },
 
     addSubscription: (state, action: PayloadAction<UserType>) => {
@@ -91,7 +94,7 @@ export const postsSlice = createSlice({
         (post) => post._id !== action.payload._id
       );
 
-      user.posts.push(action.payload);
+      user.posts = [action.payload, ...user.posts];
     },
 
     setCurrentlyOpenUser: (state, action: PayloadAction<UserType>) => {
@@ -107,6 +110,49 @@ export const postsSlice = createSlice({
         state.currentlyOpenUser.posts[postIndex] = action.payload;
       }
     },
+
+    addStoryToCurrentUser: (state, action: PayloadAction<StoryType>) => {
+      state.currentUser.stories = [
+        ...state.currentUser.stories,
+        action.payload,
+      ];
+    },
+
+    fetchCurrentUserPosts: (state) => {},
+
+    addCurrentUserPost: (state, action: PayloadAction<PostType>) => {
+      state.currentUser.posts = [action.payload, ...state.currentUser.posts];
+    },
+
+    removeCurrentUserPost: (state, action: PayloadAction<string>) => {
+      state.currentUser.posts = state.currentUser.posts.filter(
+        (post) => post._id !== action.payload
+      );
+    },
+
+    setCurrentUserPosts: (state, action: PayloadAction<PostType[]>) => {
+      state.currentUser.posts = action.payload;
+    },
+
+    updateCurrentUserPostIfExists: (state, action: PayloadAction<PostType>) => {
+      const currentPostIndex = state.currentUser.posts.findIndex(
+        (post) => post._id === action.payload._id
+      );
+
+      if (currentPostIndex !== -1) {
+        state.currentUser.posts[currentPostIndex] = action.payload;
+      }
+    },
+
+    addCommentToCurrentUserPost: (
+      state,
+      action: PayloadAction<AddCommentInput>
+    ) => {
+      const post = state.currentUser.posts.find(
+        (post) => post._id === action.payload.postId
+      );
+      post.comments.push(action.payload.comment);
+    },
   },
 });
 
@@ -116,17 +162,25 @@ export const {
   setUser,
   signUp,
   signIn,
+  addStory,
   getAllUsers,
+  getCurrentUser,
+  fetchCurrentUserPosts,
   subscribe,
   removeUser,
   getCurrentlyOpenUser,
-  setToken,
   addSubscription,
   removeSubscription,
   setUsers,
   updateUsersPost,
   setCurrentlyOpenUser,
   updateCurrentlyOpenUserPost,
+  addStoryToCurrentUser,
+  addCurrentUserPost,
+  removeCurrentUserPost,
+  setCurrentUserPosts,
+  updateCurrentUserPostIfExists,
+  addCommentToCurrentUserPost,
 } = postsSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.currentUser;

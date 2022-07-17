@@ -74,11 +74,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col bg-[#eeebff] h-screen items-center overflow-auto scrollbar-hide">
+    <div className="flex flex-col bg-gradient-to-tr from-pink-200 to-violet-300 h-screen items-center overflow-auto scrollbar-hide">
       <h1 className="md:self-start m-6 text-5xl text-purple-700 cursor-pointer font-bold">
         INTROVERT
       </h1>
-      <div className="border-8 p-5 shadow-lg shadow-gray-400 border-white rounded-xl flex flex-col items-center gap-3 mt-10 sm:w-96">
+      <div className="border-8 p-5 shadow-lg bg-[#eeebff] shadow-gray-400 border-white rounded-xl flex flex-col items-center gap-3 mt-10 sm:w-96">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-10 w-10 bg-purple-200 text-blue-500 rounded-full p-2"

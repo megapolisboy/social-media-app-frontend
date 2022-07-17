@@ -20,3 +20,7 @@
     @apply hover:scale-125 transition duration-200 ease-in-out;
   }
 }
+
+.customUploadButton input {
+  display: hidden;
+}

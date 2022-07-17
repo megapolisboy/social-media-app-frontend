@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchCurrentUserPosts, fetchPosts } from "../../features/postsSlice";
+import { fetchPosts } from "../../features/postsSlice";
 import { PostType, UserType } from "../../types";
 import Post from "./Post";
 import Spinner from "../Spinner";
+import { fetchCurrentUserPosts } from "../../features/userSlice";
 
 interface Props {
   mode: "Feed" | "Page";
@@ -15,9 +16,9 @@ interface Props {
 const Posts: React.FC<Props> = ({ mode, user, isSearchShown, filter }) => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const allPosts = useAppSelector((state) => state.posts.posts);
-  const loading = useAppSelector((state) => state.posts.loading);
+  const loading = false;
   const currentUserPosts = useAppSelector(
-    (state) => state.posts.currentUserPosts
+    (state) => state.user.currentUser.posts
   );
   const posts =
     mode === "Feed"

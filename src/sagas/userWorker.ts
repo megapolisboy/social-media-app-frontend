@@ -1,8 +1,10 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
 import {
+  addStoryApi,
   authGoogleApi,
   getAllUsersApi,
+  getCurrentUserApi,
   getUserByIdApi,
   signInApi,
   signUpApi,
@@ -12,17 +14,28 @@ import {
   removeUserErrorMessage,
   setUserErrorMessage,
 } from "../features/errorSlice";
+import { setToken } from "../features/tokenSlice";
 import {
+  addStoryToCurrentUser,
   addSubscription,
   removeSubscription,
   setCurrentlyOpenUser,
-  setToken,
   setUser,
   setUsers,
   SignInPayload,
   SignUpPayload,
 } from "../features/userSlice";
-import { GoogleResponseType, SignUpResponseType, UserType } from "../types";
+import {
+  GoogleResponseType,
+  SignUpResponseType,
+  StoryType,
+  UserType,
+} from "../types";
+
+export function* handleGetCurrentUser(): Generator {
+  const user = (yield call(getCurrentUserApi)) as unknown as UserType;
+  yield put(setUser(user));
+}
 
 export function* handleAuthGoogle(action: PayloadAction<string>): Generator {
   const data = (yield call(
@@ -92,5 +105,14 @@ export function* handleGetCurrentlyOpenUser(
     yield put(setCurrentlyOpenUser(user));
   } catch (err: any) {
     console.log("Error while fetching user");
+  }
+}
+
+export function* handleAddStory(action: PayloadAction<string>): Generator {
+  try {
+    const story = (yield call(addStoryApi, action.payload)) as StoryType;
+    yield put(addStoryToCurrentUser(story));
+  } catch (err: any) {
+    console.log("Error while adding story");
   }
 }
