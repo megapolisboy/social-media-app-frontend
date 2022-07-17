@@ -1,4 +1,5 @@
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +10,11 @@ import { UserLongType } from "../types";
 
 type Password = "text" | "password";
 
-const LoginPage = () => {
-  const [isSignup, setIsSignup] = useState(false);
+interface Props {
+  isSignUp: boolean;
+}
+
+const LoginPage: React.FC<Props> = ({ isSignUp }) => {
   const [passType, setPassType] = useState<Password>("password");
   const navigate = useNavigate();
 
@@ -36,7 +40,7 @@ const LoginPage = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    if (isSignup) {
+    if (isSignUp) {
       if (data.password !== data.confirmPassword) {
         setPasswordsEqual(false);
         return;
@@ -69,7 +73,11 @@ const LoginPage = () => {
   };
 
   const changeSignType = () => {
-    setIsSignup(!isSignup);
+    if (!isSignUp) {
+      navigate("/signUp");
+    } else {
+      navigate("/signIn");
+    }
     dispatch(removeUserErrorMessage());
   };
 
@@ -94,10 +102,10 @@ const LoginPage = () => {
           />
         </svg>
         <h1 className="text-2xl text-purple-500 font-semibold">
-          {isSignup ? "Sign Up" : "Sign In"}
+          {isSignUp ? "Sign Up" : "Sign In"}
         </h1>
         <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
-          {isSignup && (
+          {isSignUp && (
             <div className="flex flex-col sm:flex-row gap-3 justify-between">
               <div>
                 <input
@@ -177,7 +185,7 @@ const LoginPage = () => {
           <p className="text-red-500">
             {errors.password && "Password is required"}
           </p>
-          {isSignup && (
+          {isSignUp && (
             <div>
               <input
                 className="textInput"
@@ -197,10 +205,10 @@ const LoginPage = () => {
           {error && <p className="text-red-500">{error}</p>}
           <input
             type="submit"
-            value={isSignup ? "SIGN UP" : "SIGN IN"}
+            value={isSignUp ? "SIGN UP" : "SIGN IN"}
             className="signInButton"
           />
-          {!isSignup && (
+          {!isSignUp && (
             <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
           )}
         </form>
@@ -208,7 +216,7 @@ const LoginPage = () => {
           onClick={changeSignType}
           className="bg-white hover:text-purple-600 text-gray-800 font-semibold py-2 px-4 w-full rounded-lg border-2 border-blue-100"
         >
-          {isSignup
+          {isSignUp
             ? "ALREADY HAVE AN ACCOUNT? SIGN IN"
             : "NEW TO INTROVERT? SIGN UP"}
         </button>

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { getCurrentUser, logout } from "./features/userSlice";
 import { useJwt } from "react-jwt";
 import PostDetailsPage from "./pages/PostDetailsPage";
+import { Intro } from "./pages/Intro";
 import HomePage from "./pages/HomePage";
 import MessagesPage from "./pages/MessagesPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -37,8 +38,13 @@ function App() {
           <Routes>
             {(!token || !currentUser) && (
               <>
-                <Route path="/auth" element={<LoginPage />} />
-                <Route path="*" element={<Navigate replace to="/auth" />} />
+                <Route path="/intro" element={<Intro />} />
+                <Route path="*" element={<Navigate replace to="/intro" />} />
+                <Route
+                  path="/signIn"
+                  element={<LoginPage isSignUp={false} />}
+                />
+                <Route path="/signUp" element={<LoginPage isSignUp={true} />} />
               </>
             )}
             {token && currentUser && (
