@@ -1,13 +1,25 @@
 export interface PostType {
   _id: string;
-  comments: any[]; //TODO: CommentType[] | string[]
+  comments: Array<CommentType | string>;
   creator: UserType | string;
   createdAt: string;
   title: string;
   message: string;
   tags: string[];
   selectedFile?: string;
-  likes: UserType[] | string[];
+  likes: Array<UserType | string>;
+}
+
+export interface CurrentUserType {
+  _id: string;
+  name: string;
+  email: string;
+  password?: string;
+  picture?: string;
+  posts: PostType[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
+  stories?: Array<StoryType>;
 }
 
 export interface ShortPostType {
@@ -25,6 +37,9 @@ export interface UserType {
   password?: string;
   picture?: string;
   posts: PostType[] | string[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
+  stories?: Array<StoryType | string>;
 }
 
 export interface UserShortType {
@@ -51,9 +66,24 @@ export interface GoogleUser {
   name: string;
   image?: string;
   posts: PostType[] | string[];
+  subscribers: UserType[];
+  subscriptions: UserType[];
 }
 
 export interface GoogleResponseType {
   result: GoogleUser;
   token: string;
+}
+
+export interface CommentType {
+  creator: UserType;
+  message: string;
+  createdAt: string;
+}
+
+export interface StoryType {
+  _id: string;
+  creator: UserType;
+  post: string;
+  createdAt: string;
 }

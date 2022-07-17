@@ -1,46 +1,94 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchCurrentUserPosts, fetchPosts } from "../../features/postsSlice";
-import { PostType } from "../../types";
+import { fetchPosts } from "../../features/postsSlice";
+import { PostType, UserType } from "../../types";
 import Post from "./Post";
 import Spinner from "../Spinner";
+import { fetchCurrentUserPosts } from "../../features/userSlice";
 
 interface Props {
   mode: "Feed" | "Page";
+  user?: UserType;
+  isSearchShown?: boolean;
+  filter?: "likes" | "following" | "newest" | "popular" | null;
 }
 
-const Posts: React.FC<Props> = ({ mode }) => {
+const Posts: React.FC<Props> = ({ mode, user, isSearchShown, filter }) => {
+  const currentUser = useAppSelector((state) => state.user.currentUser);
   const allPosts = useAppSelector((state) => state.posts.posts);
-  const loading = useAppSelector((state) => state.posts.loading);
+  const loading = false;
   const currentUserPosts = useAppSelector(
-    (state) => state.posts.currentUserPosts
+    (state) => state.user.currentUser.posts
   );
-  const posts = mode === "Feed" ? allPosts : currentUserPosts;
+  const posts =
+    mode === "Feed"
+      ? allPosts
+      : user._id === currentUser._id
+      ? currentUserPosts
+      : user.posts;
   const dispatch = useAppDispatch();
+  const isProfilePage = currentUser._id === user?._id;
   useEffect(() => {
     if (mode === "Feed") {
       // TODO: add limitatiton
       dispatch(fetchPosts());
     } else {
-      // dispatch(fetchCurrentUserPosts)
       dispatch(fetchCurrentUserPosts());
     }
-    console.log(currentUserPosts);
   }, [mode]);
+
+  let filteredPosts: PostType[];
+
+  if (!filter) {
+    filteredPosts = posts as PostType[];
+  } else if (filter === "likes") {
+    filteredPosts = (posts as PostType[]).filter(
+      (post) =>
+        post.likes.includes(currentUser._id) ||
+        (post.likes as UserType[]).findIndex(
+          (like) => like._id === currentUser._id
+        ) !== -1
+    );
+  } else if (filter === "following") {
+    filteredPosts = (posts as PostType[]).filter((post) =>
+      currentUser.subscriptions
+        .map((user) => user._id)
+        .includes((post.creator as UserType)._id)
+    );
+  } else if (filter === "newest") {
+    filteredPosts = (posts as PostType[]).slice(0, 6);
+  } else {
+    filteredPosts = [...(posts as PostType[])];
+    filteredPosts.sort(
+      (a: PostType, b: PostType) => b.likes.length - a.likes.length
+    );
+    filteredPosts = filteredPosts.slice(0, 6);
+  }
+
   return (
-    <div className="grow">
+    <>
       {loading ? (
         <div className="ml-10">
           <Spinner />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 pb-5">
-          {posts.map((post) => (
-            <Post post={post} key={post._id} mode={mode} />
+        <div
+          className={
+            (isSearchShown ? "hidden " : "grid ") +
+            "lg:grid mt-3 pb-3 gap-6 bg-none grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 overflow-y-auto justify-items-center scrollbar-hide"
+          }
+        >
+          {filteredPosts.map((post) => (
+            <Post
+              post={post as PostType}
+              key={(post as PostType)._id}
+              mode={mode}
+              isProfilePage={isProfilePage}
+            />
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 };
 export default Posts;

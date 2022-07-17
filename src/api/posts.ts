@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AddCommentInput } from "../features/postsSlice";
 import { PostType, ShortPostType } from "../types";
 
 const api = axios.create({
@@ -8,7 +9,7 @@ const api = axios.create({
 
 api.interceptors.request.use((req) => {
   const localStorageData = localStorage.getItem("persist:root");
-  const user = JSON.parse(localStorageData || "").user;
+  const user = JSON.parse(localStorageData || "").token;
   const token = JSON.parse(user).token;
   if (token) {
     req.headers!.Authorization = "Bearer " + token;
@@ -37,6 +38,11 @@ export const removePostByIdApi = async (id: string) => {
 
 export const addLikeApi = async (id: string) => {
   const post = await api.patch(`/posts/${id}/likePost`);
-  console.log(post.data);
   return post.data;
+};
+
+export const addCommentApi = async (input: AddCommentInput) => {
+  const { postId: id, comment } = input;
+  const createdComment = await api.post(`/posts/${id}/comment`, comment);
+  return createdComment.data;
 };

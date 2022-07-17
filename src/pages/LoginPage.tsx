@@ -4,15 +4,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import Header from "../components/Header";
 import { removeUserErrorMessage } from "../features/errorSlice";
 import { authGoogle, signIn, signUp } from "../features/userSlice";
 import { UserLongType } from "../types";
 
 type Password = "text" | "password";
 
-const LoginPage = () => {
-  const [isSignup, setIsSignup] = useState(false);//TODO: передавать через пропс
+interface Props {
+  isSignUp: boolean;
+}
+
+const LoginPage: React.FC<Props> = ({ isSignUp }) => {
   const [passType, setPassType] = useState<Password>("password");
   const navigate = useNavigate();
 
@@ -38,7 +40,7 @@ const LoginPage = () => {
   };
 
   const onSubmit = handleSubmit(async (data) => {
-    if (isSignup) {
+    if (isSignUp) {
       if (data.password !== data.confirmPassword) {
         setPasswordsEqual(false);
         return;
@@ -71,17 +73,23 @@ const LoginPage = () => {
   };
 
   const changeSignType = () => {
-    setIsSignup(!isSignup);
+    if (!isSignUp) {
+      navigate("/signUp");
+    } else {
+      navigate("/signIn");
+    }
     dispatch(removeUserErrorMessage());
   };
 
   return (
-    <div className="flex flex-col items-center overflow-hidden">
-      <Header />
-      <div className="flex flex-col items-center gap-3 mt-10 sm:w-96">
+    <div className="flex flex-col bg-gradient-to-tr from-pink-200 to-violet-300 h-screen items-center overflow-auto scrollbar-hide">
+      <h1 className="md:self-start m-6 text-5xl text-purple-700 cursor-pointer font-bold">
+        INTROVERT
+      </h1>
+      <div className="border-8 p-5 shadow-lg bg-[#eeebff] shadow-gray-400 border-white rounded-xl flex flex-col items-center gap-3 mt-10 sm:w-96">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-10 w-10 bg-pink-600 text-white rounded-full p-2"
+          className="h-10 w-10 bg-purple-200 text-blue-500 rounded-full p-2"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -93,11 +101,11 @@ const LoginPage = () => {
             d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
           />
         </svg>
-        <h1 className="text-2xl font-semibold">
-          {isSignup ? "Sign Up" : "Sign In"}
+        <h1 className="text-2xl text-purple-500 font-semibold">
+          {isSignUp ? "Sign Up" : "Sign In"}
         </h1>
         <form onSubmit={onSubmit} className="flex flex-col gap-3 w-full">
-          {isSignup && (
+          {isSignUp && (
             <div className="flex flex-col sm:flex-row gap-3 justify-between">
               <div>
                 <input
@@ -133,9 +141,9 @@ const LoginPage = () => {
             {...register("email", { required: true })}
           />
           <p className="text-red-500">{errors.email && "Email is required"}</p>
-          <div className="flex space-around textInput focus-within:border-2 focus-within:border-black">
+          <div className="flex space-around textInput focus-within:shadow-purple-400">
             <input
-              className="flex-1 outline-none"
+              className="flex-1 outline-none bg-inherit "
               type={passType}
               placeholder="Password"
               aria-label="Password"
@@ -177,7 +185,7 @@ const LoginPage = () => {
           <p className="text-red-500">
             {errors.password && "Password is required"}
           </p>
-          {isSignup && (
+          {isSignUp && (
             <div>
               <input
                 className="textInput"
@@ -197,20 +205,20 @@ const LoginPage = () => {
           {error && <p className="text-red-500">{error}</p>}
           <input
             type="submit"
-            value={isSignup ? "SIGN UP" : "SIGN IN"}
+            value={isSignUp ? "SIGN UP" : "SIGN IN"}
             className="signInButton"
           />
-          {!isSignup && (
+          {!isSignUp && (
             <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
           )}
         </form>
         <button
           onClick={changeSignType}
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 self-end"
+          className="bg-white hover:text-purple-600 text-gray-800 font-semibold py-2 px-4 w-full rounded-lg border-2 border-blue-100"
         >
-          {isSignup
+          {isSignUp
             ? "ALREADY HAVE AN ACCOUNT? SIGN IN"
-            : "DON'T HAVE AN ACCOUNT? SIGN UP"}
+            : "NEW TO INTROVERT? SIGN UP"}
         </button>
       </div>
     </div>

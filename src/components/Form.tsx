@@ -48,9 +48,11 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
     <form
       onSubmit={onSubmit}
       onClick={(e) => e.stopPropagation()}
-      className="w-full relative bg-white max-w-[400px] shadow-2xl rounded-lg flex flex-col gap-4 p-3"
+      className="w-full relative border-8 border-white bg-purple-100 max-w-[400px] shadow-2xl rounded-3xl flex flex-col gap-4 p-3"
     >
-      <div className="text-[36px] text-center ">Create a Post</div>
+      <div className="text-[36px] text-center text-purple-500">
+        Create a Post
+      </div>
       <button
         className="absolute right-3 top-3 rounded-full hover:bg-gray-200 p-1"
         onClick={makeFormInvisible}
@@ -73,7 +75,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       <div className="flex flex-col gap-2">
         <input
           {...register("title", { required: true })}
-          className="p-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
+          className="p-2 rounded-lg shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
           placeholder="Title"
           type="text"
         />
@@ -84,7 +86,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       <div className="flex flex-col gap-2">
         <textarea
           {...register("message", { required: true })}
-          className="px-2 h-48 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)] resize-none"
+          className="px-2 h-48 rounded-lg shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)] resize-none"
           placeholder="Message"
         />
         {errors.title && (
@@ -93,7 +95,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       </div>
       <input
         {...register("tags")}
-        className="p-2 rounded-[5px] shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
+        className="p-2 rounded-lg shadow-[0px_0px_4px_1px_rgba(0,0,0,0.25)]"
         placeholder="Tags"
         type="text"
       />
@@ -110,12 +112,12 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
         <img src={src} className=" w-24" alt="" />
       </div>
       <input
-        className="cursor-pointer py-2 rounded-md bg-green-400"
+        className="cursor-pointer py-2 rounded-lg bg-purple-700 text-white hover:bg-purple-800"
         type="submit"
         value="SUBMIT"
       />
       <button
-        className="cursor-pointer py-1 rounded-md bg-red-600"
+        className="cursor-pointer py-1 rounded-lg border border-purple-800 hover:bg-purple-200"
         onClick={(e) => clearForm(e)}
       >
         CLEAR
