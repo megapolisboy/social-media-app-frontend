@@ -8259,6 +8259,11 @@ statuses@2.0.1:
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   integrity sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==
 
+stories-react@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/stories-react/-/stories-react-1.0.18.tgz#ecc85bc6d794c02ae098616bdcbe9f48c4a24b22"
+  integrity sha512-P2+YhquVzJCp8zWi1AIZ+LIpwE3ihSgjyDVJMPpTrVXGhJ9GzgqKHDcqNLC4+R5PJrOI0WlQBAGPz/RWoAyzqA==
+
 string-length@^4.0.1:
   version "4.0.2"
   resolved "https://registry.npmjs.org/string-length/-/string-length-4.0.2.tgz"

@@ -83,10 +83,11 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
           // onClick={() => navigate("/profile")}
         >
           <div className="rounded-full h-16 w-16 relative cursor-pointer">
-            <AvatarImage w="profile" currentUser={currentUser} />
+            <div onClick={() => navigate("/stories/" + currentUser._id)}>
+              <AvatarImage w="profile" currentUser={currentUser} />
+            </div>
             <div className="absolute bottom-0 right-0 bg-blue-700 h-5 w-5 flex justify-center items-center text-white rounded-full">
               <label htmlFor="file-upload">+</label>
-
               <input
                 id="file-upload"
                 type="file"

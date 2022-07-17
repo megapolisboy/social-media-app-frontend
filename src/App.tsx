@@ -14,6 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SavedPostsPage from "./pages/SavedPostsPage";
 import SettingsPage from "./pages/SettingsPage";
 import { tokenLogout } from "./features/tokenSlice";
+import StoriesPage from "./pages/StoriesPage";
 
 function App() {
   const token = useAppSelector((state) => state.token.token) ?? "";
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/savedPosts" element={<SavedPostsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/stories/:id" element={<StoriesPage />} />
 
                 {/* This gonna be deleted */}
 
