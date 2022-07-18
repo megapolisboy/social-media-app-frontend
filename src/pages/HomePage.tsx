@@ -26,8 +26,8 @@ const HomePage = () => {
     setIsFormShown(false);
   };
   return (
-    <div className="md:p-4 h-full lg:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
-      <div className="flex flex-col lg:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
+    <div className="md:p-4 h-full min-h-screen lg:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
+      <div className="flex h-full flex-col lg:flex-row  gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
         <Menu makeFormVisible={makeFormVisible} page="Home" />
         <MainPart
           isSearchShown={isSearchShown}

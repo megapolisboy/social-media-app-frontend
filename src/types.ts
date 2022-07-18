@@ -36,7 +36,7 @@ export interface UserType {
   email: string;
   password?: string;
   picture?: string;
-  posts: PostType[] | string[];
+  posts: Array<PostType | string>;
   subscribers: UserType[];
   subscriptions: UserType[];
   stories?: Array<StoryType | string>;
@@ -65,7 +65,7 @@ export interface GoogleUser {
   email: string;
   name: string;
   image?: string;
-  posts: PostType[] | string[];
+  posts: Array<PostType | string>;
   subscribers: UserType[];
   subscriptions: UserType[];
 }
@@ -83,7 +83,14 @@ export interface CommentType {
 
 export interface StoryType {
   _id: string;
-  creator: UserType;
+  creator: UserType | string;
   post: string;
   createdAt: string;
+}
+
+export interface UserWithStoriesType {
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  stories?: StoryType[];
 }

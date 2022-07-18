@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import MobileMenu from "../Mobile/MobileMenu";
 import Posts from "../PostStuff/Posts";
 import AvatarImage from "../UI/AvatarImage";
 import { addStory } from "../../features/userSlice";
+import { fetchStories } from "../../features/storiesSlice";
 
 interface Props {
   isSearchShown: boolean;
@@ -50,6 +51,10 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    dispatch(fetchStories());
+  }, []);
 
   return (
     <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">

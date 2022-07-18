@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import Stories from "stories-react";
 import "stories-react/dist/index.css";
+import StoryHeader from "../components/StoryHeader";
 
 const StoriesPage: React.FC = () => {
   const { userId } = useParams();
@@ -17,6 +18,7 @@ const StoriesPage: React.FC = () => {
   const listOfStories = stories.map((story) => ({
     type: "image",
     url: story.post,
+    header: <StoryHeader story={story} />,
     duration: 5000,
   }));
   return (

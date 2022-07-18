@@ -6,6 +6,7 @@ import {
   fetchPosts,
   removePostById,
 } from "../features/postsSlice";
+import { fetchStories } from "../features/storiesSlice";
 import {
   addStory,
   authGoogle,
@@ -25,6 +26,7 @@ import {
   handleFetchPosts,
   handleRemovePostById,
 } from "./postsWorker";
+import { handleFetchStories } from "./storiesWorker";
 import {
   handleAddStory,
   handleAuthGoogle,
@@ -53,4 +55,6 @@ export function* watcherSaga() {
   yield takeEvery(getCurrentUser.type, handleGetCurrentUser);
 
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
+
+  yield takeEvery(fetchStories.type, handleFetchStories);
 }

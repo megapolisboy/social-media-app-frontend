@@ -102,11 +102,12 @@ export const postsSlice = createSlice({
     },
 
     updateCurrentlyOpenUserPost: (state, action: PayloadAction<PostType>) => {
-      const postIndex = state.currentlyOpenUser.posts.findIndex(
-        (post) => post._id === action.payload._id
+      if (!state.currentlyOpenUser) return;
+      const postIndex = state.currentlyOpenUser?.posts.findIndex(
+        (post: PostType) => post._id === action.payload._id
       );
 
-      if (postIndex > -1) {
+      if (postIndex !== -1) {
         state.currentlyOpenUser.posts[postIndex] = action.payload;
       }
     },
