@@ -5,6 +5,12 @@ import Comments from "../components/CommentsStuff/Comments";
 import RecomendationsWheel from "../components/RecomendationsWheel";
 import { RootState } from "../app/store";
 import { UserType } from "../types";
+import React, { useState } from "react";
+import Menu from "../components/Menu";
+import MobileMenu from "../components/Mobile/MobileMenu";
+import MainPart from "../components/PostPageComponents/MainPart";
+import UserStuff from "../components/UserStuff";
+import Form from "../components/Form";
 
 const PostDetailsPage: React.FC = () => {
   const { id } = useParams();
@@ -12,34 +18,34 @@ const PostDetailsPage: React.FC = () => {
     state.posts.posts.find((post) => post._id === id)
   );
 
+  const [isFormShown, setIsFormShown] = useState(false);
+  
+
+  const makeFormVisible = () => {
+    setIsFormShown(true);
+  };
+
+  const makeFormInvisible = () => {
+    setIsFormShown(false);
+  };
+
+
   return (
-    <div>
-      <div className="flex p-1.5 gap-4">
-        <div className="grow">
+    <div className="md:p-4 h-full min-h-screen md:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
+      <div className="flex min-h-screen lg:min-h-fit flex-col md:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
+        <Menu makeFormVisible={makeFormVisible} page="Post Page" />
+        <MainPart userId={id} />
+        <MobileMenu makeFormVisible={makeFormVisible} />
+        <UserStuff />
+        {isFormShown && (
           <div
-            className={`${
-              (post?.title.length as any) > 15 ? "text-[64px]" : "text-[96px]"
-            } `}
+            className="fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center z-10 bg-black/60"
+            onClick={makeFormInvisible}
           >
-            {post?.title}
+            <Form makeFormInvisible={makeFormInvisible} />
           </div>
-          <div className="text-[24px] text-slate-400">
-            {post?.tags.join(" ")}
-          </div>
-          <div className="mt-12 text-[24px] grow">{post?.message}</div>
-          <div className="mt-12 text-[24px]">
-            {"Created by : " +
-              (typeof post?.creator === "string"
-                ? post?.creator
-                : (post?.creator as UserType).name)}
-          </div>
-          <div className="mt-1">35 min ago</div>
-          <div className="mt-14 max-w-[100px]">Like button</div>
-        </div>
-        <img className="" src={post.selectedFile} alt="" />
+        )}
       </div>
-      <Comments />
-      <RecomendationsWheel />
     </div>
   );
 };

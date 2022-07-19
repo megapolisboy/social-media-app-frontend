@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { tokenLogout } from "../features/tokenSlice";
@@ -5,7 +6,7 @@ import { logout } from "../features/userSlice";
 
 interface Props {
   makeFormVisible: () => void;
-  page: "Home" | "Messages" | "Settings" | "Profile" | "Saved Posts";
+  page: "Home" | "Messages" | "Settings" | "Profile" | "Saved Posts" | "Post Page";
 }
 
 const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
