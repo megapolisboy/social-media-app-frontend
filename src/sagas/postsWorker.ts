@@ -13,6 +13,7 @@ import {
   addCommentToPost,
   addNewPost,
   removePost,
+  setDefault,
   setPosts,
   updatePost,
 } from "../features/postsSlice";
@@ -76,4 +77,8 @@ export function* handleAddComment(
   yield put(
     addCommentToCurrentUserPost({ postId: action.payload.postId, comment })
   );
+}
+
+export function* handleLogoutForPosts(): Generator {
+  yield put(setDefault());
 }

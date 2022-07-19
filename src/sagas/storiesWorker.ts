@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { fetchStoriesApi } from "../api/stories";
-import { setStories } from "../features/storiesSlice";
+import { setDefault, setStories } from "../features/storiesSlice";
 import { UserWithStoriesType } from "../types";
 
 export function* handleFetchStories(): Generator {
@@ -8,4 +8,8 @@ export function* handleFetchStories(): Generator {
     fetchStoriesApi
   )) as unknown as UserWithStoriesType[];
   yield put(setStories(stories));
+}
+
+export function* handleLogoutForStories(): Generator {
+  yield put(setDefault());
 }

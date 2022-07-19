@@ -14,6 +14,7 @@ import {
   getAllUsers,
   getCurrentlyOpenUser,
   getCurrentUser,
+  logout,
   signIn,
   signUp,
   subscribe,
@@ -24,15 +25,17 @@ import {
   handleAddPost,
   handleFetchCurrentUserPosts,
   handleFetchPosts,
+  handleLogoutForPosts,
   handleRemovePostById,
 } from "./postsWorker";
-import { handleFetchStories } from "./storiesWorker";
+import { handleFetchStories, handleLogoutForStories } from "./storiesWorker";
 import {
   handleAddStory,
   handleAuthGoogle,
   handleGetAllUsers,
   handleGetCurrentlyOpenUser,
   handleGetCurrentUser,
+  handleLogoutForUsers,
   handleSignIn,
   handleSignUp,
   handleSubscribe,
@@ -57,4 +60,7 @@ export function* watcherSaga() {
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
 
   yield takeEvery(fetchStories.type, handleFetchStories);
+  // yield takeEvery(logout.type, handleLogoutForPosts);
+  // yield takeEvery(logout.type, handleLogoutForUsers);
+  // yield takeEvery(logout.type, handleLogoutForStories);
 }

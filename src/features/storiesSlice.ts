@@ -20,6 +20,8 @@ export const storiesSlice = createSlice({
   name: "stories",
   initialState,
   reducers: {
+    setDefault: (state) => initialState,
+
     fetchStories: (state) => {
       console.log("fetch!");
     },
@@ -30,5 +32,5 @@ export const storiesSlice = createSlice({
   },
 });
 
-export const { fetchStories, setStories } = storiesSlice.actions;
+export const { setDefault, fetchStories, setStories } = storiesSlice.actions;
 export default storiesSlice.reducer;

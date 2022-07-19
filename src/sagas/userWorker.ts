@@ -20,6 +20,7 @@ import {
   addSubscription,
   removeSubscription,
   setCurrentlyOpenUser,
+  setDefault,
   setUser,
   setUsers,
   SignInPayload,
@@ -115,4 +116,8 @@ export function* handleAddStory(action: PayloadAction<string>): Generator {
   } catch (err: any) {
     console.log("Error while adding story");
   }
+}
+
+export function* handleLogoutForUsers(): Generator {
+  yield put(setDefault());
 }
