@@ -1,9 +1,14 @@
 import { useAppSelector } from "../../app/hooks";
 import { UserType } from "../../types";
 
+interface User {
+  picture?: string;
+  name: string;
+}
+
 interface Props {
   w: "user" | "profile";
-  currentUser?: UserType;
+  currentUser?: User;
 }
 
 const AvatarImage: React.FC<Props> = ({ w, currentUser }) => {

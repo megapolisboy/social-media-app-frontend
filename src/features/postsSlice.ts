@@ -21,6 +21,7 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
+    setDefault: (state) => initialState,
     addPost: (state, action: PayloadAction<ShortPostType>) => {},
     addLike: (state, action: PayloadAction<string>) => {},
     addComment: (state, action: PayloadAction<AddCommentInput>) => {},
@@ -55,6 +56,7 @@ export const postsSlice = createSlice({
 });
 
 export const {
+  setDefault,
   addPost,
   removePostById,
   addComment,

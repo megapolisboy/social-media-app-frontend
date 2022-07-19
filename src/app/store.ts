@@ -4,6 +4,7 @@ import postsReducer from "../features/postsSlice";
 import userReducer from "../features/userSlice";
 import errorReducer from "../features/errorSlice";
 import tokenReducer from "../features/tokenSlice";
+import storiesReducer from "../features/storiesSlice";
 import { watcherSaga } from "../sagas/rootSaga";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   user: userReducer,
   error: errorReducer,
   token: tokenReducer,
+  stories: storiesReducer,
 });
 
 const persistConfig = {
@@ -31,7 +33,9 @@ export const store = configureStore({
   reducer: persistedReducer,
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware).concat(thunk),
+    getDefaultMiddleware({ serializableCheck: false })
+      .concat(sagaMiddleware)
+      .concat(thunk),
 });
 
 sagaMiddleware.run(watcherSaga);

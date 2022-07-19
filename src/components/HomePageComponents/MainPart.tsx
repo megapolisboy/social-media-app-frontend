@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import MobileMenu from "../Mobile/MobileMenu";
 import Posts from "../PostStuff/Posts";
 import AvatarImage from "../UI/AvatarImage";
 import { addStory } from "../../features/userSlice";
+import { fetchStories } from "../../features/storiesSlice";
 
 interface Props {
   isSearchShown: boolean;
@@ -18,6 +19,8 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
   const [filter, setFilter] = useState<
     "following" | "newest" | "popular" | null
   >(null);
+
+  const usersWithStories = useAppSelector((state) => state.stories.stories);
 
   const getBase64 = (file) => {
     return new Promise((resolve) => {
@@ -51,6 +54,10 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
       });
   };
 
+  useEffect(() => {
+    dispatch(fetchStories());
+  }, []);
+
   return (
     <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">
       <div className="flex lg:hidden justify-between items-center">
@@ -83,7 +90,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
           // onClick={() => navigate("/profile")}
         >
           <div className="rounded-full h-16 w-16 relative cursor-pointer">
-            <div onClick={() => navigate("/stories/" + currentUser._id)}>
+            <div onClick={() => navigate("/stories/current")}>
               <AvatarImage w="profile" currentUser={currentUser} />
             </div>
             <div className="absolute bottom-0 right-0 bg-blue-700 h-5 w-5 flex justify-center items-center text-white rounded-full">
@@ -101,15 +108,19 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
               (currentUser.name.split(" ")[0].length > 10 ? "..." : "")}
           </div>
         </div>
-        {currentUser.subscriptions.map((user) => (
+        {usersWithStories.map((user) => (
           <div
+            key={user.userId}
             className="flex flex-col items-center gap-1"
-            onClick={() => navigate("/profile/" + user._id)}
+            onClick={() => navigate("/stories/" + user.userId)}
           >
-            <AvatarImage w="profile" currentUser={user} />
+            <AvatarImage
+              w="profile"
+              currentUser={{ name: user.userName, picture: user.userAvatar }}
+            />
             <div className="text-xs">
-              {user.name.split(" ")[0].slice(0, 10) +
-                (user.name.split(" ")[0].length > 10 ? "..." : "")}
+              {user.userName.split(" ")[0].slice(0, 10) +
+                (user.userName.split(" ")[0].length > 10 ? "..." : "")}
             </div>
           </div>
         ))}

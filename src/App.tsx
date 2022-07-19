@@ -16,6 +16,7 @@ import SavedPostsPage from "./pages/SavedPostsPage";
 import SettingsPage from "./pages/SettingsPage";
 import { tokenLogout } from "./features/tokenSlice";
 import StoriesPage from "./pages/StoriesPage";
+import { fetchStories } from "./features/storiesSlice";
 
 function App() {
   const token = useAppSelector((state) => state.token.token) ?? "";
@@ -24,12 +25,16 @@ function App() {
   const { decodedToken, isExpired } = useJwt(token);
   useEffect(() => {
     if (decodedToken && isExpired) {
-      dispatch(logout());
       dispatch(tokenLogout());
+      dispatch(logout());
     } else if (token && !currentUser) {
       dispatch(getCurrentUser());
     }
   }, []);
+
+  const localStorageData = localStorage.getItem("persist:root");
+  const user = JSON.parse(localStorageData || "").token;
+  const localToken = JSON.parse(user).token;
 
   return (
     <Provider store={store}>
@@ -60,7 +65,8 @@ function App() {
                 {/* This gonna be deleted */}
 
                 <Route path="/posts/:id" element={<PostDetailsPage />} />
-                <Route path="/auth" element={<Navigate replace to="/" />} />
+                <Route path="/signIn" element={<Navigate replace to="/" />} />
+                <Route path="/signUp" element={<Navigate replace to="/" />} />
                 <Route path="/:search" element={<HomePage />} />
               </>
             )}

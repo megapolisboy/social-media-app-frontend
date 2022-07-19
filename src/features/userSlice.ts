@@ -37,6 +37,8 @@ export const postsSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setDefault: (state) => initialState,
+
     signUp: (state, action: PayloadAction<SignUpPayload>) => {},
 
     signIn: (state, action: PayloadAction<SignInPayload>) => {},
@@ -102,11 +104,12 @@ export const postsSlice = createSlice({
     },
 
     updateCurrentlyOpenUserPost: (state, action: PayloadAction<PostType>) => {
-      const postIndex = state.currentlyOpenUser.posts.findIndex(
-        (post) => post._id === action.payload._id
+      if (!state.currentlyOpenUser) return;
+      const postIndex = state.currentlyOpenUser?.posts.findIndex(
+        (post: PostType) => post._id === action.payload._id
       );
 
-      if (postIndex > -1) {
+      if (postIndex !== -1) {
         state.currentlyOpenUser.posts[postIndex] = action.payload;
       }
     },
@@ -131,7 +134,8 @@ export const postsSlice = createSlice({
     },
 
     setCurrentUserPosts: (state, action: PayloadAction<PostType[]>) => {
-      state.currentUser.posts = action.payload;
+      if (!state.currentUser) return;
+      state.currentUser.posts = action.payload || [];
     },
 
     updateCurrentUserPostIfExists: (state, action: PayloadAction<PostType>) => {
@@ -157,6 +161,7 @@ export const postsSlice = createSlice({
 });
 
 export const {
+  setDefault,
   authGoogle,
   logout,
   setUser,

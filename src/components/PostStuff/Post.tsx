@@ -126,7 +126,7 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
               text={post.tags.join(" ")}
               maxLine={1}
               basedOn="letters"
-              style={{ "overflow-wrap": "anywhere" }}
+              style={{ overflowWrap: "anywhere" }}
             />
           </div>
           <div className="text-[28px]">
@@ -135,7 +135,7 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
                 text={post.title}
                 maxLine={1}
                 basedOn="letters"
-                style={{ "overflow-wrap": "anywhere" }}
+                style={{ overflowWrap: "anywhere" }}
               />
             }
           </div>
@@ -144,7 +144,7 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
               text={post.message}
               basedOn="letters"
               maxLine={1}
-              style={{ "overflow-wrap": "anywhere" }}
+              style={{ overflowWrap: "anywhere" }}
             />
           </div>
           <div className="flex w-full justify-between -ml-2">
@@ -160,9 +160,9 @@ const Post: React.FC<Props> = ({ post, mode, isProfilePage }) => {
                   fill="currentColor"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
               ) : (
