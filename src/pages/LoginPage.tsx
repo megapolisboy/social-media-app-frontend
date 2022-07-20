@@ -84,7 +84,7 @@ const LoginPage: React.FC<Props> = ({ isSignUp }) => {
   return (
     <div className="flex flex-col bg-gradient-to-tr from-pink-200 to-violet-300 h-screen items-center overflow-auto scrollbar-hide">
       <h1 className="md:self-start m-6 text-5xl text-purple-700 cursor-pointer font-bold">
-        INTROVERT
+        !NTROVERT
       </h1>
       <div className="border-8 p-5 shadow-lg bg-[#eeebff] shadow-gray-400 border-white rounded-xl flex flex-col items-center gap-3 mt-10 sm:w-96">
         <svg
@@ -218,7 +218,7 @@ const LoginPage: React.FC<Props> = ({ isSignUp }) => {
         >
           {isSignUp
             ? "ALREADY HAVE AN ACCOUNT? SIGN IN"
-            : "NEW TO INTROVERT? SIGN UP"}
+            : "NEW TO !NTROVERT? SIGN UP"}
         </button>
       </div>
     </div>

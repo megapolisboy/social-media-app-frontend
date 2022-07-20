@@ -62,7 +62,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
     <div className="w-full flex-grow lg:max-w-[55%] bg-inherit flex flex-col">
       <div className="flex lg:hidden justify-between items-center">
         <h1 className="block text-2xl md:text-3xl mb-1 text-purple-700 cursor-pointer font-bold">
-          INTROVERT
+          !NTROVERT
         </h1>
         <button
           onClick={() => navigate("/messages")}

@@ -14,12 +14,8 @@ import Form from "../components/Form";
 
 const PostDetailsPage: React.FC = () => {
   const { id } = useParams();
-  const post = useAppSelector((state: RootState) =>
-    state.posts.posts.find((post) => post._id === id)
-  );
 
   const [isFormShown, setIsFormShown] = useState(false);
-  
 
   const makeFormVisible = () => {
     setIsFormShown(true);
@@ -29,12 +25,11 @@ const PostDetailsPage: React.FC = () => {
     setIsFormShown(false);
   };
 
-
   return (
-    <div className="md:p-4 h-full min-h-screen md:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
+    <div className="md:p-4 h-full min-h-screen lg:h-screen bg-gradient-to-r from-purple-100 to-purple-300">
       <div className="flex min-h-screen lg:min-h-fit flex-col md:flex-row h-full gap-3 rounded-3xl px-3 py-2 bg-gradient-to-r from-slate-100 to-purple-200 border-8 border-white ">
         <Menu makeFormVisible={makeFormVisible} page="Post Page" />
-        <MainPart userId={id} />
+        <MainPart postId={id} />
         <MobileMenu makeFormVisible={makeFormVisible} />
         <UserStuff />
         {isFormShown && (

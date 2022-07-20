@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 import { RootState } from "../app/store";
 import { CommentType, PostType, ShortPostType } from "../types";
 
@@ -9,6 +8,11 @@ interface PostsState {
 }
 
 export interface AddCommentInput {
+  postId: string;
+  comment: string;
+}
+
+export interface SetCommentInput {
   postId: string;
   comment: CommentType;
 }
@@ -46,7 +50,7 @@ export const postsSlice = createSlice({
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
 
-    addCommentToPost: (state, action: PayloadAction<AddCommentInput>) => {
+    addCommentToPost: (state, action: PayloadAction<SetCommentInput>) => {
       const post = state.posts.find(
         (post) => post._id === action.payload.postId
       );

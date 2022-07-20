@@ -14,7 +14,7 @@ export default function Logo() {
           marginTop: "-15px",
         }}
       >
-        INTROVERT
+        !NTROVERT
       </h1>
       <h6 style={{ color: "#A974FF", marginTop: "-15px" }}>
         stay alone connected
