@@ -9,7 +9,7 @@ import {
   UserShortType,
   UserType,
 } from "../types";
-import { AddCommentInput } from "./postsSlice";
+import { AddCommentInput, SetCommentInput } from "./postsSlice";
 
 interface UserState {
   currentUser: CurrentUserType | undefined;
@@ -150,11 +150,12 @@ export const postsSlice = createSlice({
 
     addCommentToCurrentUserPost: (
       state,
-      action: PayloadAction<AddCommentInput>
+      action: PayloadAction<SetCommentInput>
     ) => {
       const post = state.currentUser.posts.find(
         (post) => post._id === action.payload.postId
       );
+      if (!post) return;
       post.comments.push(action.payload.comment);
     },
   },

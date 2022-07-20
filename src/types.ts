@@ -40,6 +40,7 @@ export interface UserType {
   subscribers: UserType[];
   subscriptions: UserType[];
   stories?: Array<StoryType | string>;
+  savedPosts?: Array<PostType | string>;
 }
 
 export interface UserShortType {

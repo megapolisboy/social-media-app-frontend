@@ -6,7 +6,13 @@ import { logout } from "../features/userSlice";
 
 interface Props {
   makeFormVisible: () => void;
-  page: "Home" | "Messages" | "Settings" | "Profile" | "Saved Posts" | "Post Page";
+  page:
+    | "Home"
+    | "Messages"
+    | "Settings"
+    | "Profile"
+    | "Saved Posts"
+    | "Post Page";
 }
 
 const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
@@ -17,7 +23,7 @@ const Menu: React.FC<Props> = ({ makeFormVisible, page }) => {
     <div className="hidden lg:flex w-80 bg-white rounded-2xl flex-col justify-between">
       <div className="flex flex-col p-2 gap-2">
         <h1 className="text-4xl text-purple-700 cursor-pointer font-bold">
-          INTROVERT
+          !NTROVERT
         </h1>
         <h2 className="text-lg">Menu</h2>
         <button
