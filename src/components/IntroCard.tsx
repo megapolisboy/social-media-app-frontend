@@ -3,33 +3,17 @@ import React from "react";
 interface Props {
   text: String;
   sorce: string;
-  height: number;
+  className?: string;
 }
 
-const IntroCard: React.FC<Props> = ({ text, sorce, height }) => {
-  let style = {};
-  switch (height) {
-    case 1:
-      style = { width: "300px", height: "400px", marginTop: "20vh" };
-      break;
-    case 2:
-      style = { width: "300px", height: "400px", marginTop: "30vh" };
-      break;
-    case 3:
-      style = { width: "300px", height: "400px", marginTop: "40vh" };
-      break;
-    default:
-      break;
-  }
-
+const IntroCard: React.FC<Props> = ({ text, sorce, className }) => {
   return (
     <div
-      style={style}
-      className="border-[#fff] border-[5px] rounded-[20px] items-center justify-center flex flex-col"
+      className={`border-[#fff] border-[5px] rounded-[20px] items-center justify-center flex flex-col w-[300px] h-[400px] ${className}`}
     >
       <h1
         style={{
-          color: "#fff",
+          color: "rgba(0, 0, 0, 0)",
           WebkitTextStroke: "1px #A974FF",
           fontSize: "40px",
           marginTop: "5px",
