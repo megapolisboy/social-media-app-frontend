@@ -58,7 +58,7 @@ export const postsSlice = createSlice({
 
     subscribe: (state, action: PayloadAction<string>) => {},
 
-    addStory: (state, action: PayloadAction<string>) => {},
+    addStory: (state, action: PayloadAction<File>) => {},
 
     setUser: (state, action: PayloadAction<UserType>) => {
       state.currentUser = action.payload as CurrentUserType;

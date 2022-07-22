@@ -22,36 +22,9 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
 
   const usersWithStories = useAppSelector((state) => state.stories.stories);
 
-  const getBase64 = (file) => {
-    return new Promise((resolve) => {
-      let fileInfo;
-      let baseURL = "";
-      // Make new FileReader
-      let reader = new FileReader();
-
-      // Convert the file to base64 text
-      reader.readAsDataURL(file);
-
-      // on reader load somthing...
-      reader.onload = () => {
-        // Make a fileInfo Object
-        baseURL = reader.result as string;
-        resolve(baseURL);
-      };
-    });
-  };
-
   const handleFileInputChange = (e) => {
     let file = e.target.files[0];
-
-    getBase64(file)
-      .then((result) => {
-        file["base64"] = result;
-        dispatch(addStory(result as string));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(addStory(file));
   };
 
   useEffect(() => {
@@ -108,7 +81,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
               (currentUser.name.split(" ")[0].length > 10 ? "..." : "")}
           </div>
         </div>
-        {usersWithStories.map((user) => (
+        {/* {usersWithStories.map((user) => (
           <div
             key={user.userId}
             className="flex flex-col items-center gap-1"
@@ -123,11 +96,11 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
                 (user.userName.split(" ")[0].length > 10 ? "..." : "")}
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
       <div
         className={
-          (isSearchShown ? "hidden " : "flex ") + "lg:flex justify-between "
+          (isSearchShown ? "hidden " : "flex ") + "lg:flex justify-between mt-2"
         }
       >
         <span className="hidden lg:block">Feeds</span>

@@ -10,7 +10,7 @@ type FormData = {
   title: string;
   message: string;
   tags: string;
-  image: string;
+  image: FileList;
 };
 
 interface Props {
@@ -18,7 +18,6 @@ interface Props {
 }
 
 const Form: React.FC<Props> = ({ makeFormInvisible }) => {
-  const [src, setSrc] = useState("");
   const {
     register,
     setValue,
@@ -33,7 +32,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
       title: data.title,
       message: data.message,
       tags: data.tags.length > 0 ? data.tags.split(" ") : ["#introvert"],
-      selectedFile: data.image,
+      selectedFile: data.image[0],
       createdAt: new Date(),
     };
     dispatch(addPost(post));
@@ -101,16 +100,7 @@ const Form: React.FC<Props> = ({ makeFormInvisible }) => {
         type="text"
       />
       <div className="flex">
-        <FileBase
-          {...register("image")}
-          type="file"
-          multiple={false}
-          onDone={({ base64 }) => {
-            setSrc(base64);
-            setValue("image", base64);
-          }}
-        />
-        <img src={src} className=" w-24" alt="" />
+        <input {...register("image")} type="file" multiple={false} />
       </div>
       <input
         className="cursor-pointer py-2 rounded-lg bg-purple-700 text-white hover:bg-purple-800"

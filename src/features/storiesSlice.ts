@@ -22,9 +22,7 @@ export const storiesSlice = createSlice({
   reducers: {
     setDefault: (state) => initialState,
 
-    fetchStories: (state) => {
-      console.log("fetch!");
-    },
+    fetchStories: (state) => {},
 
     setStories: (state, action: PayloadAction<UserWithStoriesType[]>) => {
       state.stories = action.payload;

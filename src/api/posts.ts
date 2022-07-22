@@ -28,8 +28,23 @@ export const fetchCurrentUserPostsApi = async () => {
 };
 
 export const addPostApi = async (post: ShortPostType) => {
-  const newPost = await api.post("/posts", post);
-  return newPost.data;
+  const filteredPost = {
+    title: post.title,
+    tags: post.tags,
+    message: post.message,
+    createdAt: post.createdAt,
+  };
+  const newPost = await api.post("/posts", filteredPost);
+  const data = new FormData();
+  data.append("selectedFile", post.selectedFile);
+  const finalPost = await api.put(
+    "/posts/" + newPost.data._id + "/image",
+    data,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+  return finalPost.data;
 };
 
 export const removePostByIdApi = async (id: string) => {

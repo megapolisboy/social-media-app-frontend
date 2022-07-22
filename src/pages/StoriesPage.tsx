@@ -8,7 +8,6 @@ import StoryHeader from "../components/StoryHeader";
 
 const StoriesPage: React.FC = () => {
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const storiesById = useAppSelector((state) =>

@@ -25,16 +25,12 @@ function App() {
   const { decodedToken, isExpired } = useJwt(token);
   useEffect(() => {
     if (decodedToken && isExpired) {
-      dispatch(tokenLogout());
       dispatch(logout());
+      dispatch(tokenLogout());
     } else if (token && !currentUser) {
       dispatch(getCurrentUser());
     }
   }, []);
-
-  const localStorageData = localStorage.getItem("persist:root");
-  const user = JSON.parse(localStorageData || "").token;
-  const localToken = JSON.parse(user).token;
 
   return (
     <Provider store={store}>

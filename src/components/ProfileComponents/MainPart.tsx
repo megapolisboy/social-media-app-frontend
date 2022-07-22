@@ -201,7 +201,7 @@ const MainPart = ({ userId }) => {
       </div>
       <div className="border-2 border-blue-200 bg-white rounded-2xl grow scrollbar-hide overflow-y-auto">
         <div className="flex justify-end mr-5">
-          <div className="flex gap-3">
+          <div className="flex gap-3 mt-2">
             <span
               className={`${
                 !filter ? "font-bold" : ""
