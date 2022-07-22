@@ -35,6 +35,7 @@ tokenApi.interceptors.request.use((req) => {
 export const authGoogleApi = async (
   token: string
 ): Promise<GoogleResponseType> => {
+  console.log(token);
   const data = (await api.post("/user/signin/google", { token })).data;
   const result: GoogleUser = data.result;
   const jwtToken: string = data.token;
@@ -66,8 +67,10 @@ export const getUserByIdApi = async (userId: string): Promise<UserType> => {
   return user.data;
 };
 
-export const addStoryApi = async (story: string): Promise<StoryType> => {
-  const result = await tokenApi.post("/user/story", { story });
+export const addStoryApi = async (story: File): Promise<StoryType> => {
+  const data = new FormData();
+  data.append("story", story);
+  const result = await tokenApi.post("/user/story", data);
   return result.data;
 };
 

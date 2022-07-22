@@ -109,7 +109,7 @@ export function* handleGetCurrentlyOpenUser(
   }
 }
 
-export function* handleAddStory(action: PayloadAction<string>): Generator {
+export function* handleAddStory(action: PayloadAction<File>): Generator {
   try {
     const story = (yield call(addStoryApi, action.payload)) as StoryType;
     yield put(addStoryToCurrentUser(story));
