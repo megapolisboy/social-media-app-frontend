@@ -4,6 +4,7 @@ import { useAppDispatch } from "../app/hooks";
 import { addPost } from "../features/postsSlice";
 import FileBase from "react-file-base64";
 import { useState } from "react";
+import React from "react";
 
 type FormData = {
   title: string;

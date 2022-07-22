@@ -6,6 +6,7 @@ import UserStuff from "../components/UserStuff";
 import { useParams } from "react-router-dom";
 import MobileMenu from "../components/Mobile/MobileMenu";
 import React from "react";
+import SList from "../components/SList";
 
 const ProfilePage = () => {
   const [isFormShown, setIsFormShown] = useState(false);

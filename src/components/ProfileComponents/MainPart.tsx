@@ -11,6 +11,7 @@ import {
 } from "../../features/userSlice";
 import { UserType } from "../../types";
 import Posts from "../PostStuff/Posts";
+import SList from "../SList";
 import AvatarImage from "../UI/AvatarImage";
 
 interface Props {
@@ -22,6 +23,8 @@ const MainPart = ({ userId }) => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
   const [filter, setFilter] = useState<"likes" | null>(null);
+  const [isSListShown, setIsSListShown] = useState(false);
+  const [typeOfWindow, setTypeOfWindow] = useState("");
 
   const potentialUser = useAppSelector(selectCurrentlyOpenUser);
   let user: UserType;
@@ -40,10 +43,15 @@ const MainPart = ({ userId }) => {
     return Boolean(following);
   };
 
+  function hideForm() {
+    setIsSListShown(false);
+  }
+
   useEffect(() => {
     dispatch(getCurrentlyOpenUser(userId || currentUser._id));
   }, [dispatch, currentUser._id, userId, currentUser.subscriptions]);
 
+  //console.log(user.subscribers);
   return (
     <div className="flex-grow w-full lg:max-w-[55%] bg-inherit flex flex-col gap-4">
       <div className="flex lg:hidden justify-between items-center">
@@ -79,10 +87,22 @@ const MainPart = ({ userId }) => {
           <p className="text-center 2xl:text-2xl ">
             {user.posts?.length} <br /> posts
           </p>
-          <p className="text-center 2xl:text-2xl">
+          <p
+            className="text-center 2xl:text-2xl"
+            onClick={() => {
+              setIsSListShown(true);
+              setTypeOfWindow("followers");
+            }}
+          >
             {user.subscribers?.length} <br /> followers
           </p>
-          <p className="text-center 2xl:text-2xl">
+          <p
+            className="text-center 2xl:text-2xl"
+            onClick={() => {
+              setIsSListShown(true);
+              setTypeOfWindow("following");
+            }}
+          >
             {user.subscriptions?.length} <br /> following
           </p>
         </div>
@@ -204,6 +224,14 @@ const MainPart = ({ userId }) => {
           <Posts mode="Page" user={user} filter={filter} />
         </div>
       </div>
+      {isSListShown && (
+        <div
+          className="fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center z-10 bg-black/60"
+          onClick={() => setIsSListShown(false)}
+        >
+          <SList onClick={hideForm} user={user} type={typeOfWindow} />
+        </div>
+      )}
     </div>
   );
 };
