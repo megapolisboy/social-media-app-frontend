@@ -51,7 +51,6 @@ const MainPart = ({ userId }) => {
     dispatch(getCurrentlyOpenUser(userId || currentUser._id));
   }, [dispatch, currentUser._id, userId, currentUser.subscriptions]);
 
-  //console.log(user.subscribers);
   return (
     <div className="flex-grow w-full lg:max-w-[55%] bg-inherit flex flex-col gap-4">
       <div className="flex lg:hidden justify-between items-center">
@@ -153,10 +152,22 @@ const MainPart = ({ userId }) => {
             <p className="text-center 2xl:text-2xl ">
               {user.posts?.length} <br /> posts
             </p>
-            <p className="text-center 2xl:text-2xl">
+            <p
+              className="text-center 2xl:text-2xl"
+              onClick={() => {
+                setIsSListShown(true);
+                setTypeOfWindow("followers");
+              }}
+            >
               {user.subscribers?.length} <br /> followers
             </p>
-            <p className="text-center 2xl:text-2xl">
+            <p
+              className="text-center 2xl:text-2xl"
+              onClick={() => {
+                setIsSListShown(true);
+                setTypeOfWindow("following");
+              }}
+            >
               {user.subscriptions?.length} <br /> following
             </p>
           </div>
@@ -229,7 +240,7 @@ const MainPart = ({ userId }) => {
           className="fixed top-0 left-0 w-full h-[100vh] flex items-center justify-center z-10 bg-black/60"
           onClick={() => setIsSListShown(false)}
         >
-          <SList onClick={hideForm} user={user} type={typeOfWindow} />
+          <SList hideForm={hideForm} user={user} type={typeOfWindow} />
         </div>
       )}
     </div>

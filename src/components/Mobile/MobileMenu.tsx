@@ -14,7 +14,9 @@ const MobileMenu: React.FC<Props> = ({ makeFormVisible, setIsSearchShown }) => {
         className="mobileMenuButton"
         onClick={() => {
           navigate("/");
-          setIsSearchShown(false);
+          if (setIsSearchShown) {
+            setIsSearchShown(false);
+          }
         }}
       >
         <svg

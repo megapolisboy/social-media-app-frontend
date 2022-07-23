@@ -81,7 +81,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
               (currentUser.name.split(" ")[0].length > 10 ? "..." : "")}
           </div>
         </div>
-        {/* {usersWithStories.map((user) => (
+        {usersWithStories.map((user) => (
           <div
             key={user.userId}
             className="flex flex-col items-center gap-1"
@@ -96,7 +96,7 @@ const MainPart: React.FC<Props> = ({ isSearchShown, setIsSearchShown }) => {
                 (user.userName.split(" ")[0].length > 10 ? "..." : "")}
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
       <div
         className={

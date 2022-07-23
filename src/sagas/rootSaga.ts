@@ -60,7 +60,7 @@ export function* watcherSaga() {
   yield takeEvery(fetchCurrentUserPosts.type, handleFetchCurrentUserPosts);
 
   yield takeEvery(fetchStories.type, handleFetchStories);
-  // yield takeEvery(logout.type, handleLogoutForPosts);
-  // yield takeEvery(logout.type, handleLogoutForUsers);
-  // yield takeEvery(logout.type, handleLogoutForStories);
+  yield takeEvery(logout.type, handleLogoutForPosts);
+  yield takeEvery(logout.type, handleLogoutForUsers);
+  yield takeEvery(logout.type, handleLogoutForStories);
 }

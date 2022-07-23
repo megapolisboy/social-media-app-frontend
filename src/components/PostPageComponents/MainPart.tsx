@@ -1,21 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { tokenLogout } from "../../features/tokenSlice";
 import { addLike } from "../../features/postsSlice";
-import {
-  getCurrentlyOpenUser,
-  logout,
-  selectCurrentlyOpenUser,
-  subscribe,
-} from "../../features/userSlice";
+
 import { UserType } from "../../types";
 import Comments from "../CommentsStuff/Comments";
-import Posts from "../PostStuff/Posts";
-import RecomendationsWheel from "../RecomendationsWheel";
-import AvatarImage from "../UI/AvatarImage";
 
 //@ts-ignore
 import { DateTime } from "luxon";
@@ -24,7 +14,7 @@ interface Props {
   postId: string;
 }
 
-const MainPart = ({ postId }) => {
+const MainPart: React.FC<Props> = ({ postId }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.user.currentUser);
@@ -142,9 +132,9 @@ const MainPart = ({ postId }) => {
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   ) : (

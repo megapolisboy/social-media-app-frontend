@@ -61,6 +61,7 @@ function App() {
                 {/* This gonna be deleted */}
 
                 <Route path="/posts/:id" element={<PostDetailsPage />} />
+                <Route path="/intro" element={<Navigate replace to="/" />} />
                 <Route path="/signIn" element={<Navigate replace to="/" />} />
                 <Route path="/signUp" element={<Navigate replace to="/" />} />
                 <Route path="/:search" element={<HomePage />} />

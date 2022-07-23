@@ -40,11 +40,10 @@ const Comments: React.FC<Props> = ({ postId }) => {
       <div className="w-full">
         <div className="flex flex-row items-center justify-between">
           <AvatarImage w="user" currentUser={currentUser} />
-          <input
-            className="grow mx-3 border-2 border-zinc-300 rounded-md p-1"
+          <textarea
+            className="grow mx-3 border-2 resize-none h-20 border-zinc-300 rounded-md p-1"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            type="text"
             placeholder="Write your thoughts here..."
           />
           <button
@@ -73,8 +72,8 @@ const Comments: React.FC<Props> = ({ postId }) => {
       <div className="flex flex-col gap-y-2 mt-3">
         <h3>Other thoughts</h3>
         <div className="flex flex-col gap-y-5">
-          {post.comments.map((comment) => (
-            <Comment comment={comment as CommentType} />
+          {post.comments.map((comment: CommentType) => (
+            <Comment key={comment.createdAt} comment={comment} />
           ))}
         </div>
       </div>
